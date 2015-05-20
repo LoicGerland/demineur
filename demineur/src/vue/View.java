@@ -42,25 +42,18 @@ public class View extends JFrame {
     }
     
     public void build() {
-        
-
-        //JMenu jm = new JMenu();
+    	
         JMenuBar jm = new JMenuBar();
         
         JMenu m = new JMenu("Jeu");
         
         JMenuItem mi = new JMenuItem("Partie");
         
-        //ItemListener i = new Item
-        
         m.add(mi);
         
         jm.add(m);
         
-       
-        
         setJMenuBar(jm);
-        
         
         setTitle("Démineur");
         setSize(400, 400);
@@ -68,7 +61,7 @@ public class View extends JFrame {
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
 
         for(int i = 0; i<100;i++){
-            JComponent ptest = new Case();
+            JComponent ptest = new Case(i/10,i%10);
             ptest.setBorder(blackline);
             pan.add(ptest);
         }

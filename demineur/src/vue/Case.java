@@ -15,9 +15,15 @@ import javax.swing.JPanel;
  * @author Loic
  */
 public class Case extends JPanel {
+	
+	private int x;
+	
+	private int y;
 
-    public Case() {
+    public Case(int x, int y) {
         super();
+        this.x = x;
+        this.y = y;
         
         setBackground(Color.white);
         
@@ -28,6 +34,7 @@ public class Case extends JPanel {
                 super.mouseClicked(arg0);
                 setBackground(Color.BLACK);
             }
+            
             
             
             
