@@ -1,6 +1,8 @@
 package modele;
 
-public class Case {
+import java.util.Observable;
+
+public class CaseModele extends Observable{
 	
 	private int value;
 	
@@ -8,7 +10,7 @@ public class Case {
 	
 	private boolean flag;
 	
-	public Case(Type t){
+	public CaseModele(Type t){
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
@@ -28,6 +30,20 @@ public class Case {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag() {
+		if(this.flag) {
+			this.flag = false;
+		}
+		else {this.flag = true; }
+		System.out.println("Tu as mis un drapeau sur moi " + this);
+		setChanged();
+        notifyObservers();
 	}
 
 }

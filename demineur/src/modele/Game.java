@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Game {
 	
-	private Case[][] grid;
+	private CaseModele[][] grid;
 	
 	private Player[] players;
 	
@@ -17,7 +17,7 @@ public class Game {
 	public Game(int x, int y,int nb, Player[] players){
 		this.width = x;
 		this.height = y;
-		this.grid = new Case[this.width][this.height];
+		this.grid = new CaseModele[this.width][this.height];
 		this.players = players;
 		this.nbBombs = nb;
 		
@@ -28,7 +28,7 @@ public class Game {
 		return players;
 	}
 
-	public Case[][] getGrid() {
+	public CaseModele[][] getGrid() {
 		return grid;
 	}
 
@@ -49,10 +49,10 @@ public class Game {
 		for(int i = 0; i < this.width; i++){
 			for(int j = 0; j < this.height; j++){
 				if(nb > 0 & r.nextInt(this.height*this.width) < this.nbBombs){
-					this.grid[i][j] = new Case(Type.Mine);
+					this.grid[i][j] = new CaseModele(Type.Mine);
 					nb--;
 				}
-				else this.grid[i][j] = new Case(Type.Empty);
+				else this.grid[i][j] = new CaseModele(Type.Empty);
 			}
 		}
 		

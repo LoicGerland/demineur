@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package vue;
 
 import java.awt.Color;
@@ -19,15 +14,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import modele.Game;
+
 /**
  *
  * @author Loic
  */
 public class View extends JFrame {
+	
+	private Game game;
 
-    public View() {
+    public View(Game g) {
         super();
-        
+        this.game = g;
         build();
         
         addWindowListener(new WindowAdapter() {
@@ -61,7 +60,7 @@ public class View extends JFrame {
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
 
         for(int i = 0; i<100;i++){
-            JComponent ptest = new Case(i/10,i%10);
+            JComponent ptest = new CaseVue(this.game.getGrid()[i/10][i%10]);
             ptest.setBorder(blackline);
             pan.add(ptest);
         }

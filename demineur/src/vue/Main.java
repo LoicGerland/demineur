@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package vue;
 
 import javax.swing.SwingUtilities;
+
+import modele.Game;
+import modele.Player;
 
 /**
  *
@@ -19,9 +17,13 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				//On crée une nouvelle instance de notre JDialog
-				View fenetre = new View();
-				fenetre.setVisible(true);//On la rend visible
+				Player[] p = new Player[1];
+				Player p1 = new Player("P1");
+				p[0] = p1;
+				Game game = new Game(10,10,20,p);
+				
+				View fenetre = new View(game);
+				fenetre.setVisible(true);
 			}
 		});
 
