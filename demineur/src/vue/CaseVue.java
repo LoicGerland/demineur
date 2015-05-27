@@ -2,6 +2,8 @@ package vue;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
@@ -10,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import modele.CaseModele;
 import modele.Point;
@@ -26,7 +29,6 @@ public class CaseVue extends JPanel {
 	public CaseVue(CaseModele caseM) {
 		super();
 		this.caseMod = caseM;
-		setLayout(new FlowLayout());
 
 		setBackground(Color.white);
 
@@ -49,15 +51,19 @@ public class CaseVue extends JPanel {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (caseMod.isFlag()) {
-					setBackground(Color.black);
+					CaseVue.this.setBackground(Color.black);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Mine) {
-					setBackground(Color.red);
+					CaseVue.this.setBackground(Color.red);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
-					add(new JLabel(String.valueOf(caseMod.getValue())));
+					CaseVue.this.setBackground(Color.blue);
+					System.out.println(String.valueOf(caseMod.getValue()));
+					//Mais pas moyen de l'afficher dans le carrée,
+					// J'ai essayé tout plein de truc avec des labels et tout mais ca me saoule !
+					// Ca veut pas m'afficher du texte 
 				} else {
-					setBackground(Color.white);
+					CaseVue.this.setBackground(Color.white);
 				}
 			}
 

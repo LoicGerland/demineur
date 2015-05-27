@@ -100,4 +100,8 @@ public class CaseModele extends Observable {
 			}
 		}
 	}
+
+	public Game getGame() {
+		return this.game;
+	}
 }
