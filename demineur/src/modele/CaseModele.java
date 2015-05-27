@@ -15,11 +15,14 @@ public class CaseModele extends Observable {
 
 	private boolean checked;
 
-	public CaseModele(Type t) {
+	private Game game;
+
+	public CaseModele(Type t, Game game) {
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
 		this.clicked = false;
+		this.game = game;
 	}
 
 	public int getValue() {
@@ -37,7 +40,7 @@ public class CaseModele extends Observable {
 	public void setType(Type type) {
 		this.type = type;
 	}
-	
+
 	public boolean isChecked() {
 		return checked;
 	}
@@ -45,8 +48,8 @@ public class CaseModele extends Observable {
 	public void setChecked() {
 		this.checked = true;
 	}
-	
-	public void setUncheck(){
+
+	public void setUncheck() {
 		this.checked = false;
 	}
 
@@ -57,8 +60,6 @@ public class CaseModele extends Observable {
 	public void setFlag() {
 		if (!this.clicked) {
 			this.flag = !this.flag;
-			System.out.println("Tu as mis un drapeau sur moi, Moi, de type "
-					+ this.getType() + " " + this);
 			setChanged();
 			notifyObservers();
 		}
@@ -71,22 +72,27 @@ public class CaseModele extends Observable {
 	public void setClicked() {
 		if (!this.flag) {
 			this.clicked = true;
-			this.flag = false;
-			this.setChecked();
-			this.playCase();
-			System.out.println("Tu m'as dévoilée ! Moi, de type "
-					+ this.getType() + " " + this);
+			if (!this.isChecked()) {
+				this.setChecked();
+				this.playCase();
+				if (this.getType() == Type.Mine) {
+					game.looser();
+				}
+			}
 		}
+
 	}
 
 	private void playCase() {
-		List<CaseModele> voisins = Grid2D.getVoisin(this);
+		List<CaseModele> voisins = game.getGrid().getVoisin(this);
 		for (CaseModele voisin : voisins) {
-			this.setValue(this.getValue() + voisin.getValue());
+			if (voisin.getType() == Type.Mine) {
+				this.setValue(this.getValue() + 1);
+			}
 		}
 		setChanged();
 		notifyObservers();
-		if (this.getValue() <= 0) {
+		if (this.getValue() <= 0 && this.getType()!= Type.Mine) {
 			for (CaseModele voisin : voisins) {
 				if (!voisin.isChecked()) {
 					voisin.setClicked();

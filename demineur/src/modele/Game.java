@@ -3,18 +3,18 @@ package modele;
 import java.util.Random;
 
 public class Game {
-	
-	private Grid2D grid;
-	
+
+	private Grid grid;
+
 	private Player[] players;
-	
+
 	private int nbBombs;
-		
-	public Game(int x, int y,int nb, Player[] players){
-		this.grid = new Grid2D(x,y);
+
+	public Game(int x, int y, int nb, Player[] players) {
+		this.grid = new Grid2D(x, y);
 		this.players = players;
 		this.nbBombs = nb;
-		
+
 		setGrid();
 	}
 
@@ -22,38 +22,55 @@ public class Game {
 		return players;
 	}
 
-	public Grid2D getGrid() {
+	public Grid getGrid() {
 		return grid;
 	}
 
 	public int getNbBombs() {
 		return nbBombs;
 	}
-	
-	public void setGrid()
-	{
+
+	public void setGrid() {
 		Random r = new Random();
 		int nb = this.nbBombs;
-		
-		for(int i = 0; i < this.getGrid().getWidth(); i++){
-			for(int j = 0; j < this.getGrid().getHeight(); j++){
-				if(nb > 0 && r.nextInt(this.getGrid().getHeight()*this.getGrid().getWidth()) < this.nbBombs){
-					this.getGrid().getMap().put(new Point(i,j), new CaseModele(Type.Mine));
+
+		for (int i = 0; i < this.getGrid().getWidth(); i++) {
+			for (int j = 0; j < this.getGrid().getHeight(); j++) {
+				if (nb > 0
+						&& r.nextInt(this.getGrid().getHeight()
+								* this.getGrid().getWidth()) < this.nbBombs) {
+					this.getGrid().setCase(new CaseModele(Type.Mine, this), i,
+							j);
+					nb--;
+				} else
+					this.getGrid().setCase(new CaseModele(Type.Empty, this), i,
+							j);
+			}
+		}
+
+		if (nb > 0) {
+			while (nb > 0) {
+				int i = r.nextInt(this.getGrid().getWidth());
+				int j = r.nextInt(this.getGrid().getHeight());
+				if (this.getGrid().getGrid()[i][j].getType() != Type.Mine) {
+					this.getGrid().getGrid()[i][j].setType(Type.Mine);
 					nb--;
 				}
-				else this.getGrid().getMap().put(new Point(i,j), new CaseModele(Type.Empty));
 			}
 		}
-		
-		if(nb >0){
-			while(nb > 0){
-				int x = r.nextInt(this.getGrid().getWidth());
-				int y =	r.nextInt(this.getGrid().getHeight());
-				if(this.getGrid().getMap().get(new Point(x,y)).getType() != Type.Mine){
-					this.getGrid().getMap().get(new Point(x,y)).setType(Type.Mine);
-					nb--;						
+	}
+
+	public void looser() {
+		for (int i = 0; i < this.getGrid().getWidth(); i++) {
+			for (int j = 0; j < this.getGrid().getHeight(); j++) {
+				if (this.getGrid().getGrid()[i][j].getType() == Type.Mine) {
+					if (this.getGrid().getGrid()[i][j].isFlag()) {
+						this.getGrid().getGrid()[i][j].setFlag();
+					}
+					this.getGrid().getGrid()[i][j].setClicked();
 				}
 			}
 		}
+
 	}
 }
