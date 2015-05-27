@@ -9,10 +9,12 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import modele.CaseModele;
 import modele.Point;
@@ -22,13 +24,15 @@ import modele.Type;
  *
  * @author Loic
  */
-public class CaseVue extends JPanel {
+public class CaseVue extends JButton {
 
 	private CaseModele caseMod;
 
 	public CaseVue(CaseModele caseM) {
 		super();
 		this.caseMod = caseM;
+		this.setIconTextGap( - CaseVue.this.getWidth() );
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
 
 		setBackground(Color.white);
 
@@ -57,7 +61,8 @@ public class CaseVue extends JPanel {
 					CaseVue.this.setBackground(Color.red);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
-					CaseVue.this.setBackground(Color.blue);
+					//CaseVue.this.setBackground(Color.blue);
+					CaseVue.this.setText(caseMod.getValue()+" ");
 					System.out.println(String.valueOf(caseMod.getValue()));
 					//Mais pas moyen de l'afficher dans le carrée,
 					// J'ai essayé tout plein de truc avec des labels et tout mais ca me saoule !
