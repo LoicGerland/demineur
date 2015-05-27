@@ -9,6 +9,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import modele.CaseModele;
+import modele.Type;
 
 /**
  *
@@ -30,6 +31,13 @@ public class CaseVue extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                 	caseMod.setFlag();
+                }
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	caseMod.setClicked();
+                	if(caseMod.getType() == Type.Mine) {
+                		setBackground(Color.red);
+                	}
+                	
                 }
             }
             

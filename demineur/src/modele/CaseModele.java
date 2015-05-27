@@ -10,10 +10,13 @@ public class CaseModele extends Observable{
 	
 	private boolean flag;
 	
+	private boolean clicked;
+	
 	public CaseModele(Type t){
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
+		this.clicked = false;
 	}
 
 	public int getValue() {
@@ -37,13 +40,22 @@ public class CaseModele extends Observable{
 	}
 
 	public void setFlag() {
-		if(this.flag) {
-			this.flag = false;
+		if(!this.clicked){
+			if(this.flag) {
+				this.flag = false;
+			}
+			else {this.flag = true; }
+			System.out.println("Tu as mis un drapeau sur moi " + this);
+			setChanged();
+	        notifyObservers();
 		}
-		else {this.flag = true; }
-		System.out.println("Tu as mis un drapeau sur moi " + this);
-		setChanged();
-        notifyObservers();
 	}
 
+	public boolean isClicked() {
+		return clicked;
+	}
+
+	public void setClicked() {
+		this.clicked = true;
+	}
 }
