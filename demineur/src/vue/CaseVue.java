@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import modele.CaseModele;
@@ -34,10 +35,6 @@ public class CaseVue extends JPanel {
                 }
                 if (e.getButton() == MouseEvent.BUTTON1) {
                 	caseMod.setClicked();
-                	if(caseMod.getType() == Type.Mine) {
-                		setBackground(Color.red);
-                	}
-                	
                 }
             }
             
@@ -54,7 +51,14 @@ public class CaseVue extends JPanel {
 				if(caseMod.isFlag()) {
 					setBackground(Color.black);
 				}
-				else { setBackground(Color.white);}
+				else if(caseMod.isClicked() && caseMod.getType() == Type.Mine) {
+					setBackground(Color.red);
+				}
+				else if(caseMod.isClicked() && caseMod.getType() == Type.Empty) {
+					setBackground(Color.blue);
+					add(new JLabel(String.valueOf(caseMod.getValue())));
+				}
+				else { setBackground(Color.white); }
 			}
         	
         });
