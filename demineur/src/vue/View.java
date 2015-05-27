@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import modele.Game;
+import modele.Point;
 
 /**
  *
@@ -60,7 +61,9 @@ public class View extends JFrame {
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
 
         for(int i = 0; i<100;i++){
-            JComponent ptest = new CaseVue(this.game.getGrid()[i/10][i%10]);
+        	System.out.println(i/10);
+        	System.out.println(i%10);
+            JComponent ptest = new CaseVue(this.game.getGrid().getMap().get(new Point(i/10,i%10)));
             ptest.setBorder(blackline);
             pan.add(ptest);
         }
