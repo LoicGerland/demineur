@@ -15,14 +15,14 @@ public class CaseModele extends Observable {
 
 	private boolean checked;
 
-	private Game game;
+	private Grid grid;
 
-	public CaseModele(Type t, Game game) {
+	public CaseModele(Type t, Grid grid) {
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
 		this.clicked = false;
-		this.game = game;
+		this.grid = grid;
 	}
 
 	public int getValue() {
@@ -62,6 +62,7 @@ public class CaseModele extends Observable {
 			this.flag = !this.flag;
 			setChanged();
 			notifyObservers();
+			grid.checkGame();
 		}
 	}
 
@@ -75,16 +76,14 @@ public class CaseModele extends Observable {
 			if (!this.isChecked()) {
 				this.setChecked();
 				this.playCase();
-				if (this.getType() == Type.Mine) {
-					game.looser();
-				}
+				grid.checkGame();
 			}
 		}
 
 	}
 
 	private void playCase() {
-		List<CaseModele> voisins = game.getGrid().getVoisin(this);
+		List<CaseModele> voisins = grid.getVoisin(this);
 		for (CaseModele voisin : voisins) {
 			if (voisin.getType() == Type.Mine) {
 				this.setValue(this.getValue() + 1);
@@ -92,7 +91,7 @@ public class CaseModele extends Observable {
 		}
 		setChanged();
 		notifyObservers();
-		if (this.getValue() <= 0 && this.getType()!= Type.Mine) {
+		if (this.getValue() <= 0 && this.getType() != Type.Mine) {
 			for (CaseModele voisin : voisins) {
 				if (!voisin.isChecked()) {
 					voisin.setClicked();
@@ -101,7 +100,7 @@ public class CaseModele extends Observable {
 		}
 	}
 
-	public Game getGame() {
-		return this.game;
+	public Grid getGrid() {
+		return this.grid;
 	}
 }

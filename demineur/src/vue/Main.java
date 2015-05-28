@@ -1,5 +1,7 @@
 package vue;
 
+import java.util.Scanner;
+
 import javax.swing.SwingUtilities;
 
 import modele.Game;
@@ -20,7 +22,14 @@ public class Main {
 				Player[] p = new Player[1];
 				Player p1 = new Player("P1");
 				p[0] = p1;
-				Game game = new Game(10,10,20,p);
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Entrer la hauteur : ");
+				int x = sc.nextInt();
+				System.out.println("Entrer la largeur : ");
+				int y = sc.nextInt();
+				System.out.println("Entrer le nombre de bombes : ");
+				int nbBomb = sc.nextInt();
+				Game game = new Game(x,y,nbBomb,p);
 				
 				View fenetre = new View(game);
 				fenetre.setVisible(true);

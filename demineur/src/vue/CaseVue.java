@@ -62,11 +62,7 @@ public class CaseVue extends JButton {
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
 					//CaseVue.this.setBackground(Color.blue);
-					CaseVue.this.setText(caseMod.getValue()+" ");
-					System.out.println(String.valueOf(caseMod.getValue()));
-					//Mais pas moyen de l'afficher dans le carrée,
-					// J'ai essayé tout plein de truc avec des labels et tout mais ca me saoule !
-					// Ca veut pas m'afficher du texte 
+					CaseVue.this.setText(String.valueOf(caseMod.getValue()));
 				} else {
 					CaseVue.this.setBackground(Color.white);
 				}

@@ -2,6 +2,7 @@ package modele;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 public abstract class Grid {
 
@@ -13,11 +14,14 @@ public abstract class Grid {
 
 	private CaseModele[][] grid;
 
-	public Grid(int x, int y) {
+	private Game game;
+
+	public Grid(int x, int y, Game game) {
 		this.height = y;
 		this.width = x;
 		this.map = new HashMap<CaseModele, Point>();
 		this.grid = new CaseModele[x][y];
+		this.setGame(game);
 	}
 
 	public int getHeight() {
@@ -46,6 +50,8 @@ public abstract class Grid {
 
 	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
 
+	public abstract void checkGame();
+
 	public CaseModele[][] getGrid() {
 		return grid;
 	}
@@ -57,5 +63,13 @@ public abstract class Grid {
 	public void setCase(CaseModele caseGrid, int x, int y) {
 		this.grid[x][y] = caseGrid;
 		this.map.put(caseGrid, new Point(x, y));
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 }

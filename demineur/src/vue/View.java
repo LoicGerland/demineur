@@ -55,7 +55,7 @@ public class View extends JFrame {
 		setJMenuBar(jm);
 
 		setTitle("Démineur");
-		setSize(400, 400);
+		setSize(40*game.getGrid().getWidth(), 40*game.getGrid().getHeight());
 		JComponent pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
 				game.getGrid().getHeight()));
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1);
