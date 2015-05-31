@@ -41,7 +41,6 @@ public class Grid2D extends Grid {
 
 	public void checkGame() {
 		if (!this.getGame().is_again()) {
-			int nbFlag = 0;
 			int nbEmpty = 0;
 			for (int i = 0; i < this.getWidth(); i++) {
 				for (int j = 0; j < this.getHeight(); j++) {
@@ -50,25 +49,14 @@ public class Grid2D extends Grid {
 							&& currentCase.isClicked()) {
 						this.getGame().looser();
 						return;
-					} else if (currentCase.getType() == Type.Mine
-							&& currentCase.isFlag()) {
-						nbFlag++;
 					} else if (currentCase.getType() == Type.Empty
 							&& currentCase.isClicked()) {
 						nbEmpty++;
 					}
 				}
 			}
-			System.out.println("Flags : "
-					+ nbFlag
-					+ " Empty :"
-					+ nbEmpty
-					+ " Total : "
-					+ (this.getHeight() * this.getWidth() - this.getGame()
-							.getNbBombs()));
 			if (nbEmpty == this.getHeight() * this.getWidth()
-					- this.getGame().getNbBombs()
-					| nbFlag == this.getGame().getNbBombs()) {
+					- this.getGame().getNbBombs()) {
 				this.getGame().winner();
 			}
 		}

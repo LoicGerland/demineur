@@ -12,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -31,8 +32,8 @@ public class CaseVue extends JButton {
 	public CaseVue(CaseModele caseM) {
 		super();
 		this.caseMod = caseM;
-		this.setIconTextGap( - CaseVue.this.getWidth() );
-        this.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.setIconTextGap(-CaseVue.this.getWidth());
+		this.setHorizontalTextPosition(SwingConstants.CENTER);
 
 		setBackground(Color.white);
 
@@ -45,6 +46,11 @@ public class CaseVue extends JButton {
 				}
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					caseMod.setClicked();
+				}
+				if (e.getClickCount() == 2 && !e.isConsumed()
+						&& e.getButton() == MouseEvent.BUTTON1) {
+					e.consume();
+					caseMod.setDoubleClick();
 				}
 			}
 
@@ -61,13 +67,19 @@ public class CaseVue extends JButton {
 					CaseVue.this.setBackground(Color.red);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
-					//CaseVue.this.setBackground(Color.blue);
+					// CaseVue.this.setBackground(Color.blue);
 					CaseVue.this.setText(String.valueOf(caseMod.getValue()));
 				} else {
 					CaseVue.this.setBackground(Color.white);
 				}
+				if (!caseMod.isEnabled()) {
+					CaseVue.this.getParent().getParent().getParent()
+							.getParent().getParent().setVisible(false);
+				}
+
 			}
 
 		});
+
 	}
 }

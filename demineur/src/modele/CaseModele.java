@@ -13,9 +13,9 @@ public class CaseModele extends Observable {
 
 	private boolean clicked;
 
-	private boolean checked;
-
 	private Grid grid;
+
+	private boolean enabled;
 
 	public CaseModele(Type t, Grid grid) {
 		this.value = 0;
@@ -23,6 +23,7 @@ public class CaseModele extends Observable {
 		this.flag = false;
 		this.clicked = false;
 		this.grid = grid;
+		this.enabled = true;
 	}
 
 	public int getValue() {
@@ -41,28 +42,15 @@ public class CaseModele extends Observable {
 		this.type = type;
 	}
 
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked() {
-		this.checked = true;
-	}
-
-	public void setUncheck() {
-		this.checked = false;
-	}
-
 	public boolean isFlag() {
 		return flag;
 	}
 
 	public void setFlag() {
-		if (!this.clicked) {
+		if (!this.clicked && this.isEnabled()) {
 			this.flag = !this.flag;
-			setChanged();
-			notifyObservers();
 			grid.checkGame();
+			update();
 		}
 	}
 
@@ -71,10 +59,9 @@ public class CaseModele extends Observable {
 	}
 
 	public void setClicked() {
-		if (!this.flag) {
-			this.clicked = true;
-			if (!this.isChecked()) {
-				this.setChecked();
+		if (!this.flag && this.isEnabled()) {
+			if (!this.isClicked()) {
+				this.clicked = true;
 				this.playCase();
 				grid.checkGame();
 			}
@@ -89,18 +76,35 @@ public class CaseModele extends Observable {
 				this.setValue(this.getValue() + 1);
 			}
 		}
-		setChanged();
-		notifyObservers();
+		update();
 		if (this.getValue() <= 0 && this.getType() != Type.Mine) {
 			for (CaseModele voisin : voisins) {
-				if (!voisin.isChecked()) {
+				if (!voisin.isClicked()) {
 					voisin.setClicked();
 				}
 			}
 		}
 	}
 
-	public Grid getGrid() {
-		return this.grid;
+	public void setDoubleClick() {
+		List<CaseModele> voisins = grid.getVoisin(this);
+		for (CaseModele voisin : voisins) {
+			if (!voisin.isClicked()) {
+				voisin.setClicked();
+			}
+		}
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
+	public void update() {
+		setChanged();
+		notifyObservers();
 	}
 }
