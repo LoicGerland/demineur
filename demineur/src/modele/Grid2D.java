@@ -40,7 +40,7 @@ public class Grid2D extends Grid {
 	}
 
 	public void checkGame() {
-		if (!this.getGame().is_again()) {
+		if (!this.getGame().isAgain()) {
 			int nbEmpty = 0;
 			for (int i = 0; i < this.getWidth(); i++) {
 				for (int j = 0; j < this.getHeight(); j++) {

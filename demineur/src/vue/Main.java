@@ -32,6 +32,11 @@ public class Main {
 
 				Menu menu = new Menu();
 				menu.setVisible(true);
+				/*Player p1 = new Player("p1");
+				Player[] players = new Player[]{p1};
+				Game game = new Game(10,10,20,players);
+				View fenetre = new View(game);
+				fenetre.setVisible(true);*/
 
 			}
 		});

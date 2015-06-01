@@ -39,7 +39,7 @@ public class Menu extends JFrame {
 
 	JSpinner nbBomb;
 
-	JComboBox difficulty;
+	JComboBox<String> difficulty;
 
 	/**
 	 * Create the frame.
@@ -73,13 +73,13 @@ public class Menu extends JFrame {
 		nbBomb.setBounds(272, 68, 50, 20);
 		contentPane.add(nbBomb);
 
-		difficulty = new JComboBox();
+		difficulty = new JComboBox<String>();
 		difficulty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				changeDifficulty();
 			}
 		});
-		difficulty.setModel(new DefaultComboBoxModel(new String[] { "Facile",
+		difficulty.setModel(new DefaultComboBoxModel<String>(new String[] { "Facile",
 				"Moyen", "Difficile", "Personnalis\u00E9" }));
 		difficulty.setToolTipText("");
 		difficulty.setBounds(10, 68, 120, 20);
@@ -151,12 +151,16 @@ public class Menu extends JFrame {
 	protected void start() {
 		Player p1 = new Player("p1");
 		Player[] players = new Player[]{p1};
+		
+		/*if((Integer)nbLine.getValue() * (Integer)nbColumn.getValue() > (Integer)nbBomb.getValue()) {
+			nbBomb.setValue((Integer)nbLine.getValue() * (Integer)nbColumn.getValue());
+		}*/
 		Game game = new Game((Integer)nbLine.getValue(),(Integer)nbColumn.getValue(),(Integer)nbBomb.getValue(),players);
 		
 		View vue = new View(game);
 		vue.setVisible(true);
 		
-		this.hide();
+		this.dispose();
 		
 	}
 }

@@ -50,7 +50,7 @@ public class CaseModele extends Observable {
 		if (!this.clicked && this.isEnabled()) {
 			this.flag = !this.flag;
 			grid.checkGame();
-			update();
+			notifyCase();
 		}
 	}
 
@@ -76,7 +76,7 @@ public class CaseModele extends Observable {
 				this.setValue(this.getValue() + 1);
 			}
 		}
-		update();
+		notifyCase();
 		if (this.getValue() <= 0 && this.getType() != Type.Mine) {
 			for (CaseModele voisin : voisins) {
 				if (!voisin.isClicked()) {
@@ -103,7 +103,7 @@ public class CaseModele extends Observable {
 		return this.enabled;
 	}
 
-	public void update() {
+	public void notifyCase() {
 		setChanged();
 		notifyObservers();
 	}

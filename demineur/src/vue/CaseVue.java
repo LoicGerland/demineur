@@ -67,7 +67,6 @@ public class CaseVue extends JButton {
 					CaseVue.this.setBackground(Color.red);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
-					// CaseVue.this.setBackground(Color.blue);
 					CaseVue.this.setText(String.valueOf(caseMod.getValue()));
 				} else {
 					CaseVue.this.setBackground(Color.white);

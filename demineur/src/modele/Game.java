@@ -1,10 +1,9 @@
 package modele;
 
+import java.util.Observable;
 import java.util.Random;
 
-import vue.End;
-
-public class Game {
+public class Game extends Observable{
 
 	private Grid grid;
 
@@ -12,20 +11,23 @@ public class Game {
 
 	private int nbBombs;
 
-	private boolean _again = false;
+	private boolean again = false;
+	
+	private Status status;
 
-	public boolean is_again() {
-		return _again;
+	public boolean isAgain() {
+		return again;
 	}
 
-	public void set_again(boolean _again) {
-		this._again = _again;
+	public void setAgain(boolean again) {
+		this.again = again;
 	}
 
 	public Game(int x, int y, int nb, Player[] players) {
 		this.grid = new Grid2D(x, y, this);
 		this.players = players;
 		this.nbBombs = nb;
+		this.status = Status.Playing;
 
 		setGrid();
 	}
@@ -42,8 +44,16 @@ public class Game {
 		return nbBombs;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public void setGrid() {
-		this.set_again(false);
+		this.setAgain(false);
 		Random r = new Random();
 		int nb = this.nbBombs;
 
@@ -75,8 +85,8 @@ public class Game {
 	}
 
 	public void looser() {
-		if (_again == false) {
-			_again = true;
+		if (again == false) {
+			again = true;
 			for (int i = 0; i < this.getGrid().getWidth(); i++) {
 				for (int j = 0; j < this.getGrid().getHeight(); j++) {
 					if (this.getGrid().getGrid()[i][j].getType() == Type.Mine) {
@@ -88,28 +98,21 @@ public class Game {
 
 				}
 			}
-			System.out.println("YOU LOSE !");
-			this.getGrid().getGrid()[0][0].setEnabled(false);
-			this.getGrid().getGrid()[0][0].update();
-
-			End end = new End(false);
-			end.setVisible(true);
+			this.status = Status.Loose;
+			notifyView();
 		}
 	}
 
 	public void winner() {
-		if (_again == false) {
-			_again = true;
-			for (int i = 0; i < this.getGrid().getWidth(); i++) {
-				for (int j = 0; j < this.getGrid().getHeight(); j++) {
-					this.getGrid().getGrid()[i][j].setEnabled(false);
-				}
-			}
-			System.out.println("YOU WIN !");
-			this.getGrid().getGrid()[0][0].setEnabled(false);
-			this.getGrid().getGrid()[0][0].update();
-			End end = new End(true);
-			end.setVisible(true);
+		if (again == false) {
+			again = true;
+			this.status = Status.Win;
+			notifyView();
 		}
+	}
+	
+	public void notifyView() {
+		setChanged();
+		notifyObservers();
 	}
 }

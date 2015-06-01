@@ -48,10 +48,6 @@ public abstract class Grid {
 		this.map = map;
 	}
 
-	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
-
-	public abstract void checkGame();
-
 	public CaseModele[][] getGrid() {
 		return grid;
 	}
@@ -71,5 +67,9 @@ public abstract class Grid {
 
 	public void setGame(Game game) {
 		this.game = game;
-	}
+	}	
+	
+	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
+
+	public abstract void checkGame();
 }
