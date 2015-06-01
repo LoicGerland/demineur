@@ -3,16 +3,18 @@ package modele;
 import java.util.Observable;
 import java.util.Random;
 
-public class Game extends Observable{
+public class Game extends Observable {
 
 	private Grid grid;
 
 	private Player[] players;
 
 	private int nbBombs;
+	
+	private int nbFlags = 0;
 
 	private boolean again = false;
-	
+
 	private Status status;
 
 	public boolean isAgain() {
@@ -26,10 +28,15 @@ public class Game extends Observable{
 	public Game(int x, int y, int nb, Player[] players) {
 		this.grid = new Grid2D(x, y, this);
 		this.players = players;
+		if (x * y < nb) {
+			nb = x * y;
+		}
 		this.nbBombs = nb;
 		this.status = Status.Playing;
 
 		setGrid();
+		
+		notifyView();
 	}
 
 	public Player[] getPlayers() {
@@ -110,9 +117,17 @@ public class Game extends Observable{
 			notifyView();
 		}
 	}
-	
+
 	public void notifyView() {
 		setChanged();
 		notifyObservers();
+	}
+
+	public int getNbFlags() {
+		return nbFlags;
+	}
+
+	public void setNbFlags(int nbFlags) {
+		this.nbFlags = nbFlags;
 	}
 }

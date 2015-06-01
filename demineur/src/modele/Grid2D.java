@@ -41,7 +41,9 @@ public class Grid2D extends Grid {
 
 	public void checkGame() {
 		if (!this.getGame().isAgain()) {
+			this.getGame().notifyView();
 			int nbEmpty = 0;
+			int nbFlag = 0;
 			for (int i = 0; i < this.getWidth(); i++) {
 				for (int j = 0; j < this.getHeight(); j++) {
 					CaseModele currentCase = this.getGrid()[i][j];
@@ -53,12 +55,16 @@ public class Grid2D extends Grid {
 							&& currentCase.isClicked()) {
 						nbEmpty++;
 					}
+					if(currentCase.isFlag()){
+						nbFlag++;
+					}
 				}
 			}
 			if (nbEmpty == this.getHeight() * this.getWidth()
 					- this.getGame().getNbBombs()) {
 				this.getGame().winner();
 			}
+			this.getGame().setNbFlags(nbFlag);
 		}
 	}
 }

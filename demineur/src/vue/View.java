@@ -1,6 +1,9 @@
 package vue;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -34,6 +37,7 @@ public class View extends JFrame {
 	JMenuBar jm = new JMenuBar();
 	JMenu m = new JMenu("Jeu");
 	JMenuItem mi = new JMenuItem("Partie");
+	JLabel lblNbBomb;
 
 	public View(Game g) {
 		super();
@@ -70,6 +74,9 @@ public class View extends JFrame {
 					}
 					else {System.exit(0); }
 				}
+				if(game.getStatus() == Status.Playing){
+					lblNbBomb.setText(((Integer)(game.getNbBombs()-game.getNbFlags())).toString());
+				}
 			}
 		});
 	}
@@ -81,11 +88,19 @@ public class View extends JFrame {
 		jm.add(m);
 
 		setJMenuBar(jm);
-
+		
+		JComponent window = new JPanel(new BorderLayout());
+		JPanel status = new JPanel(new FlowLayout());
+		lblNbBomb = new JLabel(((Integer)game.getNbBombs()).toString());
+		status.add(lblNbBomb);
+		
 		setTitle("Démineur");
 		setSize(40 * game.getGrid().getHeight(), 40 * game.getGrid().getWidth());
 		JComponent pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
 				game.getGrid().getHeight()));
+		
+		pan.setSize(40 * game.getGrid().getHeight(), 40 * game.getGrid().getWidth());
+		
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1);
 
 		for (int i = 0; i < game.getGrid().getWidth(); i++) {
@@ -97,7 +112,10 @@ public class View extends JFrame {
 			}
 		}
 		pan.setBorder(blackline);
-		add(pan);
+		
+		window.add(status, BorderLayout.NORTH);
+		window.add(pan, BorderLayout.CENTER);
+		add(window);
 		// setContentPane(pan);
 	}
 
