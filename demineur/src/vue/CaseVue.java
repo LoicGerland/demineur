@@ -67,6 +67,9 @@ public class CaseVue extends JButton {
 					CaseVue.this.setBackground(Color.red);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
+					
+					Font font = new Font("Stencil", Font.BOLD, 18);
+					CaseVue.this.setFont(font);
 					CaseVue.this.setText(String.valueOf(caseMod.getValue()));
 				} else {
 					CaseVue.this.setBackground(Color.white);
