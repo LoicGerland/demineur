@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ import javax.swing.SwingConstants;
 import modele.CaseModele;
 import modele.Point;
 import modele.Type;
+
 
 /**
  *
@@ -34,8 +37,9 @@ public class CaseVue extends JButton {
 		this.caseMod = caseM;
 		this.setIconTextGap(-CaseVue.this.getWidth());
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.setHorizontalAlignment(CENTER);
 
-		setBackground(Color.white);
+		setBackground(Color.CYAN);
 
 		addMouseListener(new MouseAdapter() {
 
@@ -61,22 +65,25 @@ public class CaseVue extends JButton {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (caseMod.isFlag()) {
-					CaseVue.this.setBackground(Color.black);
+					ImageIcon flag = new ImageIcon("src/vue/image/flag.png");
+					CaseVue.this.setIcon(flag);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Mine) {
-					CaseVue.this.setBackground(Color.red);
+					ImageIcon bomb = new ImageIcon("src/vue/image/bomb.png");
+					CaseVue.this.setIcon(bomb);
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
-					
-					Font font = new Font("Stencil", Font.BOLD, 18);
-					CaseVue.this.setFont(font);
-					CaseVue.this.setText(String.valueOf(caseMod.getValue()));
+					if (caseMod.getValue() == 0) {
+						CaseVue.this.setBackground(Color.BLUE);
+					} else {
+						Font font = new Font("Stencil", Font.BOLD, 18);
+						CaseVue.this.setFont(font);
+						CaseVue.this.setText(String.valueOf(caseMod.getValue()));
+						CaseVue.this.setForeground(Color.DARK_GRAY);
+					}
 				} else {
-					CaseVue.this.setBackground(Color.white);
-				}
-				if (!caseMod.isEnabled()) {
-					CaseVue.this.getParent().getParent().getParent()
-							.getParent().getParent().setVisible(false);
+					CaseVue.this.removeAll();
+					CaseVue.this.setBackground(Color.CYAN);
 				}
 
 			}

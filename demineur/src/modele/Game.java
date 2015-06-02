@@ -60,7 +60,6 @@ public class Game extends Observable {
 	}
 
 	public void setGrid() {
-		this.setAgain(false);
 		Random r = new Random();
 		int nb = this.nbBombs;
 
@@ -92,8 +91,8 @@ public class Game extends Observable {
 	}
 
 	public void looser() {
-		if (again == false) {
-			again = true;
+		if (this.status == Status.Playing) {
+			this.status = Status.Loose;
 			for (int i = 0; i < this.getGrid().getWidth(); i++) {
 				for (int j = 0; j < this.getGrid().getHeight(); j++) {
 					if (this.getGrid().getGrid()[i][j].getType() == Type.Mine) {
@@ -105,14 +104,12 @@ public class Game extends Observable {
 
 				}
 			}
-			this.status = Status.Loose;
 			notifyView();
 		}
 	}
 
 	public void winner() {
-		if (again == false) {
-			again = true;
+		if (this.status == Status.Playing) {
 			this.status = Status.Win;
 			notifyView();
 		}

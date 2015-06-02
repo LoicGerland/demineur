@@ -40,8 +40,7 @@ public class Grid2D extends Grid {
 	}
 
 	public void checkGame() {
-		if (!this.getGame().isAgain()) {
-			this.getGame().notifyView();
+		if (this.getGame().getStatus() == Status.Playing) {
 			int nbEmpty = 0;
 			int nbFlag = 0;
 			for (int i = 0; i < this.getWidth(); i++) {
@@ -63,8 +62,10 @@ public class Grid2D extends Grid {
 			if (nbEmpty == this.getHeight() * this.getWidth()
 					- this.getGame().getNbBombs()) {
 				this.getGame().winner();
+				return;
 			}
 			this.getGame().setNbFlags(nbFlag);
+			this.getGame().notifyView();
 		}
 	}
 }
