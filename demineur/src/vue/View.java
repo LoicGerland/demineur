@@ -94,6 +94,7 @@ public class View extends JFrame {
 		againThis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.getGrid().hideAll();
+				game.setStatus(Status.Playing);
 			}
 		});
 		
@@ -158,7 +159,8 @@ public class View extends JFrame {
 	}
 
 	protected void quit() {
-		System.exit(0);
+		//System.exit(0);
+		this.game.getGrid().showAll();
 	}
 
 }

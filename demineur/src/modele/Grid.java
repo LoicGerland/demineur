@@ -71,6 +71,8 @@ public abstract class Grid {
 	public abstract void showBomb();
 
 	public abstract void setGrid(int nbBombs);
-	
+
 	public abstract void hideAll();
+	
+	public abstract void showAll();
 }
