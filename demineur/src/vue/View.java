@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import modele.CaseModele;
 import modele.Game;
 import modele.Status;
 
@@ -67,8 +68,8 @@ public class View extends JFrame {
 				}
 				if (game.getStatus() == Status.Loose) {
 					int option = JOptionPane.showConfirmDialog(null,
-							"Voulez-vous continuer à jouer ?",
-							"Perdu !!", JOptionPane.YES_NO_OPTION,
+							"Voulez-vous continuer à jouer ?", "Perdu !!",
+							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
@@ -126,12 +127,10 @@ public class View extends JFrame {
 		status.add(lblNbBomb);
 
 		setTitle("Démineur");
-		setSize(40 * game.getGrid().getHeight(), 40 * game.getGrid().getWidth());
+		
 		JComponent pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
 				game.getGrid().getHeight()));
-
-		pan.setSize(40 * game.getGrid().getHeight(), 40 * game.getGrid()
-				.getWidth());
+		
 
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1);
 
@@ -148,7 +147,8 @@ public class View extends JFrame {
 		window.add(status, BorderLayout.NORTH);
 		window.add(pan, BorderLayout.CENTER);
 		add(window);
-		// setContentPane(pan);
+		setSize(36 * game.getGrid().getHeight(), (int) (status.getSize()
+				.getWidth() + 36 * game.getGrid().getWidth() + 36));
 	}
 
 	protected void againThis() {
@@ -169,6 +169,7 @@ public class View extends JFrame {
 	}
 
 	protected void againNew() {
+		CaseModele.resetFirstCase();
 		View.this.dispose();
 		new Menu().setVisible(true);
 	}

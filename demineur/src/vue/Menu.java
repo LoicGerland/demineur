@@ -51,17 +51,17 @@ public class Menu extends JFrame {
 		contentPane.add(lblTitre);
 
 		nbLine = new JSpinner();
-		nbLine.setModel(new SpinnerNumberModel(1, 1, 50, 1));
+		nbLine.setModel(new SpinnerNumberModel(1, 1, 18, 1));
 		nbLine.setBounds(152, 68, 50, 20);
 		contentPane.add(nbLine);
 
 		nbColumn = new JSpinner();
-		nbColumn.setModel(new SpinnerNumberModel(1, 1, 50, 1));
+		nbColumn.setModel(new SpinnerNumberModel(1, 1, 32, 1));
 		nbColumn.setBounds(212, 68, 50, 20);
 		contentPane.add(nbColumn);
 
 		nbBomb = new JSpinner();
-		nbBomb.setModel(new SpinnerNumberModel(1, 1, 2500, 1));
+		nbBomb.setModel(new SpinnerNumberModel(1, 1, 576, 1));
 		nbBomb.setBounds(272, 68, 50, 20);
 		contentPane.add(nbBomb);
 
@@ -144,12 +144,12 @@ public class Menu extends JFrame {
 		Player p1 = new Player("p1");
 		Player[] players = new Player[] { p1 };
 
-		/*
-		 * if((Integer)nbLine.getValue() * (Integer)nbColumn.getValue() >
-		 * (Integer)nbBomb.getValue()) {
-		 * nbBomb.setValue((Integer)nbLine.getValue() *
-		 * (Integer)nbColumn.getValue()); }
-		 */
+		if ((Integer) nbLine.getValue() * (Integer) nbColumn.getValue() < (Integer) nbBomb
+				.getValue()) {
+			nbBomb.setValue((Integer) nbLine.getValue()
+					* (Integer) nbColumn.getValue());
+		}
+
 		Game game = new Game((Integer) nbLine.getValue(),
 				(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),
 				players);

@@ -15,6 +15,8 @@ public class CaseModele extends Observable {
 
 	private Grid grid;
 
+	private static boolean firstCase = true;
+
 	public CaseModele(Type t, Grid grid) {
 		this.value = 0;
 		this.type = t;
@@ -56,14 +58,37 @@ public class CaseModele extends Observable {
 	}
 
 	public void setClicked() {
+		if (firstCase) {
+			if (this.getType() == Type.Mine) {
+				this.moveBomb();
+			}
+			firstCase = false;
+		}
+		click();
+		grid.checkGame();
+	}
+
+	public void click() {
+
 		if (!this.flag) {
 			if (!this.isClicked()) {
 				this.clicked = true;
 				this.playCase();
-				grid.checkGame();
 			}
 		}
 
+	}
+
+	private void moveBomb() {
+		this.setType(Type.Empty);
+		List<CaseModele> voisins = grid.getVoisin(this);
+		for (CaseModele voisin : voisins) {
+			if (voisin.getType() == Type.Empty) {
+				voisin.setType(Type.Mine);
+				return;
+			}
+		}
+		this.setType(Type.Mine);
 	}
 
 	private void playCase() {
@@ -78,7 +103,7 @@ public class CaseModele extends Observable {
 		if (this.getValue() <= 0 && this.getType() != Type.Mine) {
 			for (CaseModele voisin : voisins) {
 				if (!voisin.isClicked()) {
-					voisin.setClicked();
+					voisin.click();
 				}
 			}
 		}
@@ -87,22 +112,32 @@ public class CaseModele extends Observable {
 	public void setDoubleClick() {
 		List<CaseModele> voisins = grid.getVoisin(this);
 		for (CaseModele voisin : voisins) {
-			if (!voisin.isClicked()) {
-				voisin.setClicked();
+			if (!voisin.isClicked()
+					&& this.grid.getGame().getStatus() == Status.Playing) {
+				voisin.click();
 			}
 		}
+		grid.checkGame();
 	}
 
 	public void notifyCase() {
 		setChanged();
 		notifyObservers();
 	}
-	
-	public void resetFlag(){
+
+	public void resetFlag() {
 		this.flag = false;
 	}
-	
-	public void resetClick(){
+
+	public void resetClick() {
 		this.clicked = false;
+	}
+
+	public static void resetFirstCase() {
+		setFirstCase(true);
+	}
+
+	public static void setFirstCase(boolean firstCase) {
+		CaseModele.firstCase = firstCase;
 	}
 }
