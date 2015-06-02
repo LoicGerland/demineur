@@ -18,6 +18,7 @@ import modele.Type;
  *
  * @author Loic
  */
+@SuppressWarnings("serial")
 public class CaseVue extends JButton {
 
 	private CaseModele caseMod;

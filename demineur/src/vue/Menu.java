@@ -1,34 +1,26 @@
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import java.awt.Font;
-import java.text.Format;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.JFormattedTextField;
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import modele.Game;
 import modele.Player;
 
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
+@SuppressWarnings("serial")
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
@@ -86,7 +78,7 @@ public class Menu extends JFrame {
 		contentPane.add(difficulty);
 
 		JLabel lblDifficult = new JLabel("Difficult\u00E9");
-		lblDifficult.setBounds(10, 55, 46, 14);
+		lblDifficult.setBounds(10, 55, 66, 14);
 		contentPane.add(lblDifficult);
 
 		JLabel lblLigne = new JLabel("Ligne");

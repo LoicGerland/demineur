@@ -1,7 +1,6 @@
 package modele;
 
 import java.util.Observable;
-import java.util.Random;
 
 public class Game extends Observable {
 

@@ -1,11 +1,6 @@
 package vue;
 
-import java.util.Scanner;
-
 import javax.swing.SwingUtilities;
-
-import modele.Game;
-import modele.Player;
 
 /**
  *
