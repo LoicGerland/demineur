@@ -55,24 +55,24 @@ public class View extends JFrame {
 			public void update(Observable arg0, Object arg1) {
 				if (game.getStatus() == Status.Win) {
 					int option = JOptionPane.showConfirmDialog(null,
-							"Voulez-vous lancer une nouvelle partie ?",
-							"Gagné !!", JOptionPane.YES_NO_OPTION,
+							"Voulez-vous continuer à jouer ?", "Gagné !!",
+							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						again();
+						continuer();
 					} else {
 						quit();
 					}
 				}
 				if (game.getStatus() == Status.Loose) {
 					int option = JOptionPane.showConfirmDialog(null,
-							"Voulez-vous lancer une nouvelle partie ?",
+							"Voulez-vous continuer à jouer ?",
 							"Perdu !!", JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						again();
+						continuer();
 					} else {
 						quit();
 					}
@@ -89,20 +89,18 @@ public class View extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Option");
 		JMenu again = new JMenu("Recommencer");
-		
+
 		JMenuItem againThis = new JMenuItem("cette partie");
 		againThis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.getGrid().hideAll();
-				game.setStatus(Status.Playing);
+				againThis();
 			}
 		});
-		
-		
+
 		JMenuItem againNew = new JMenuItem("nouvelle partie");
 		againNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				again();
+				againNew();
 			}
 		});
 
@@ -114,10 +112,10 @@ public class View extends JFrame {
 		});
 		again.add(againThis);
 		again.add(againNew);
-		
+
 		menu.add(again);
 		menu.add(quit);
-		
+
 		menuBar.add(menu);
 
 		setJMenuBar(menuBar);
@@ -153,14 +151,30 @@ public class View extends JFrame {
 		// setContentPane(pan);
 	}
 
-	protected void again() {
+	protected void againThis() {
+		game.getGrid().hideAll();
+		game.setStatus(Status.Playing);
+	}
+
+	protected void continuer() {
+		int option = JOptionPane.showConfirmDialog(null,
+				"Recommencer cette partie ?", "Partie",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (option == JOptionPane.OK_OPTION) {
+			againThis();
+		} else {
+			againNew();
+		}
+	}
+
+	protected void againNew() {
 		View.this.dispose();
 		new Menu().setVisible(true);
 	}
 
 	protected void quit() {
-		//System.exit(0);
-		this.game.getGrid().showAll();
+		System.exit(0);
 	}
 
 }
