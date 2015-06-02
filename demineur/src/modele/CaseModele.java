@@ -15,15 +15,12 @@ public class CaseModele extends Observable {
 
 	private Grid grid;
 
-	private boolean enabled;
-
 	public CaseModele(Type t, Grid grid) {
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
 		this.clicked = false;
 		this.grid = grid;
-		this.enabled = true;
 	}
 
 	public int getValue() {
@@ -47,7 +44,7 @@ public class CaseModele extends Observable {
 	}
 
 	public void setFlag() {
-		if (!this.clicked && this.isEnabled()) {
+		if (!this.clicked) {
 			this.flag = !this.flag;
 			grid.checkGame();
 			notifyCase();
@@ -59,7 +56,7 @@ public class CaseModele extends Observable {
 	}
 
 	public void setClicked() {
-		if (!this.flag && this.isEnabled()) {
+		if (!this.flag) {
 			if (!this.isClicked()) {
 				this.clicked = true;
 				this.playCase();
@@ -70,6 +67,7 @@ public class CaseModele extends Observable {
 	}
 
 	private void playCase() {
+		this.setValue(0);
 		List<CaseModele> voisins = grid.getVoisin(this);
 		for (CaseModele voisin : voisins) {
 			if (voisin.getType() == Type.Mine) {
@@ -95,16 +93,16 @@ public class CaseModele extends Observable {
 		}
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isEnabled() {
-		return this.enabled;
-	}
-
 	public void notifyCase() {
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void resetFlag(){
+		this.flag = false;
+	}
+	
+	public void resetClick(){
+		this.clicked = false;
 	}
 }

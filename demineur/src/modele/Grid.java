@@ -52,10 +52,6 @@ public abstract class Grid {
 		return grid;
 	}
 
-	public void setGrid(CaseModele[][] grid) {
-		this.grid = grid;
-	}
-
 	public void setCase(CaseModele caseGrid, int x, int y) {
 		this.grid[x][y] = caseGrid;
 		this.map.put(caseGrid, new Point(x, y));
@@ -67,9 +63,15 @@ public abstract class Grid {
 
 	public void setGame(Game game) {
 		this.game = game;
-	}	
-	
+	}
+
 	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
 
 	public abstract void checkGame();
+
+	public abstract void showBomb();
+
+	public abstract void setGrid(int nbBombs);
+	
+	public abstract void hideAll();
 }

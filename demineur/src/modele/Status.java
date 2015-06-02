@@ -1,8 +1,5 @@
 package modele;
 
 public enum Status {
-	
-	Playing,
-	Win,
-	Loose;
+	Playing, Win, Loose;
 }

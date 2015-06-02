@@ -1,28 +1,18 @@
 package vue;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import modele.CaseModele;
-import modele.Point;
 import modele.Type;
-
 
 /**
  *
@@ -65,10 +55,12 @@ public class CaseVue extends JButton {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (caseMod.isFlag()) {
-					CaseVue.this.setIcon(new ImageIcon("src/vue/image/flag.png"));
+					CaseVue.this
+							.setIcon(new ImageIcon("src/vue/image/flag.png"));
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Mine) {
-					CaseVue.this.setIcon(new ImageIcon("src/vue/image/bomb.png"));
+					CaseVue.this
+							.setIcon(new ImageIcon("src/vue/image/bomb.png"));
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
 					if (caseMod.getValue() == 0) {
@@ -81,6 +73,7 @@ public class CaseVue extends JButton {
 					}
 				} else {
 					CaseVue.this.setIcon(null);
+					CaseVue.this.setText(null);
 					CaseVue.this.setBackground(Color.CYAN);
 				}
 

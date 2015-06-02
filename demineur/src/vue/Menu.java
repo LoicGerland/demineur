@@ -79,8 +79,8 @@ public class Menu extends JFrame {
 				changeDifficulty();
 			}
 		});
-		difficulty.setModel(new DefaultComboBoxModel<String>(new String[] { "Facile",
-				"Moyen", "Difficile", "Personnalis\u00E9" }));
+		difficulty.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"Facile", "Moyen", "Difficile", "Personnalis\u00E9" }));
 		difficulty.setToolTipText("");
 		difficulty.setBounds(10, 68, 120, 20);
 		contentPane.add(difficulty);
@@ -109,7 +109,7 @@ public class Menu extends JFrame {
 		});
 		btnNewButton.setBounds(5, 99, 328, 31);
 		contentPane.add(btnNewButton);
-		
+
 		changeDifficulty();
 	}
 
@@ -122,7 +122,7 @@ public class Menu extends JFrame {
 			nbLine.setValue(9);
 			nbColumn.setValue(9);
 			nbBomb.setValue(10);
-			
+
 		} else if (difficulty.getSelectedItem() == "Moyen") {
 			nbBomb.setEnabled(false);
 			nbLine.setEnabled(false);
@@ -131,7 +131,7 @@ public class Menu extends JFrame {
 			nbLine.setValue(16);
 			nbColumn.setValue(16);
 			nbBomb.setValue(40);
-			
+
 		} else if (difficulty.getSelectedItem() == "Difficile") {
 			nbBomb.setEnabled(false);
 			nbLine.setEnabled(false);
@@ -140,7 +140,7 @@ public class Menu extends JFrame {
 			nbLine.setValue(16);
 			nbColumn.setValue(30);
 			nbBomb.setValue(99);
-			
+
 		} else if (difficulty.getSelectedItem() == "Personnalis\u00E9") {
 			nbBomb.setEnabled(true);
 			nbLine.setEnabled(true);
@@ -150,17 +150,22 @@ public class Menu extends JFrame {
 
 	protected void start() {
 		Player p1 = new Player("p1");
-		Player[] players = new Player[]{p1};
-		
-		/*if((Integer)nbLine.getValue() * (Integer)nbColumn.getValue() > (Integer)nbBomb.getValue()) {
-			nbBomb.setValue((Integer)nbLine.getValue() * (Integer)nbColumn.getValue());
-		}*/
-		Game game = new Game((Integer)nbLine.getValue(),(Integer)nbColumn.getValue(),(Integer)nbBomb.getValue(),players);
-		
+		Player[] players = new Player[] { p1 };
+
+		/*
+		 * if((Integer)nbLine.getValue() * (Integer)nbColumn.getValue() >
+		 * (Integer)nbBomb.getValue()) {
+		 * nbBomb.setValue((Integer)nbLine.getValue() *
+		 * (Integer)nbColumn.getValue()); }
+		 */
+		Game game = new Game((Integer) nbLine.getValue(),
+				(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),
+				players);
+
 		View vue = new View(game);
 		vue.setVisible(true);
-		
+
 		this.dispose();
-		
+
 	}
 }
