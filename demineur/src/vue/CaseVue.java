@@ -65,12 +65,10 @@ public class CaseVue extends JButton {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (caseMod.isFlag()) {
-					ImageIcon flag = new ImageIcon("src/vue/image/flag.png");
-					CaseVue.this.setIcon(flag);
+					CaseVue.this.setIcon(new ImageIcon("src/vue/image/flag.png"));
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Mine) {
-					ImageIcon bomb = new ImageIcon("src/vue/image/bomb.png");
-					CaseVue.this.setIcon(bomb);
+					CaseVue.this.setIcon(new ImageIcon("src/vue/image/bomb.png"));
 				} else if (caseMod.isClicked()
 						&& caseMod.getType() == Type.Empty) {
 					if (caseMod.getValue() == 0) {
@@ -82,7 +80,7 @@ public class CaseVue extends JButton {
 						CaseVue.this.setForeground(Color.DARK_GRAY);
 					}
 				} else {
-					CaseVue.this.removeAll();
+					CaseVue.this.setIcon(null);
 					CaseVue.this.setBackground(Color.CYAN);
 				}
 
