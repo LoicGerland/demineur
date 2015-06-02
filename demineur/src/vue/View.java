@@ -34,12 +34,17 @@ import modele.Status;
 public class View extends JFrame {
 
 	private Game game;
+	
+	private Couleur color;
 
 	JLabel lblNbBomb;
+	
+	JComponent pan;
 
 	public View(Game g) {
 		super();
 		this.game = g;
+		color = Couleur.Bleu; 
 		build();
 
 		addWindowListener(new WindowAdapter() {
@@ -89,6 +94,8 @@ public class View extends JFrame {
 	public void build() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Option");
+		
+		
 		JMenu again = new JMenu("Recommencer");
 
 		JMenuItem againThis = new JMenuItem("cette partie");
@@ -97,6 +104,7 @@ public class View extends JFrame {
 				againThis();
 			}
 		});
+		again.add(againThis);
 
 		JMenuItem againNew = new JMenuItem("nouvelle partie");
 		againNew.addActionListener(new ActionListener() {
@@ -104,6 +112,56 @@ public class View extends JFrame {
 				againNew();
 			}
 		});
+		again.add(againNew);
+		
+		menu.add(again);
+		
+		
+		
+		JMenu colorMenu = new JMenu("Changer de couleur");
+		
+		JMenuItem colorWhite = new JMenuItem("Blanc");
+		colorWhite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setColor(Couleur.Blanc);
+			}
+		});
+		colorMenu.add(colorWhite);
+
+		JMenuItem colorBlue = new JMenuItem("Bleu");
+		colorBlue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setColor(Couleur.Bleu);
+			}
+		});
+		colorMenu.add(colorBlue);
+
+		JMenuItem colorGreen = new JMenuItem("Vert");
+		colorGreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setColor(Couleur.Vert);
+			}
+		});
+		colorMenu.add(colorGreen);
+
+		JMenuItem colorRed = new JMenuItem("Rouge");
+		colorRed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setColor(Couleur.Rouge);
+			}
+		});
+		colorMenu.add(colorRed);
+		
+		JMenuItem colorPurple = new JMenuItem("Violet");
+		colorPurple.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setColor(Couleur.Violet);
+			}
+		});
+		colorMenu.add(colorPurple);
+		
+		menu.add(colorMenu);
+		
 
 		JMenuItem quit = new JMenuItem("Quitter");
 		quit.addActionListener(new ActionListener() {
@@ -111,12 +169,8 @@ public class View extends JFrame {
 				quit();
 			}
 		});
-		again.add(againThis);
-		again.add(againNew);
-
-		menu.add(again);
 		menu.add(quit);
-
+		
 		menuBar.add(menu);
 
 		setJMenuBar(menuBar);
@@ -128,7 +182,7 @@ public class View extends JFrame {
 
 		setTitle("Démineur");
 		
-		JComponent pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
+		pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
 				game.getGrid().getHeight()));
 		
 
@@ -137,7 +191,7 @@ public class View extends JFrame {
 		for (int i = 0; i < game.getGrid().getWidth(); i++) {
 			for (int j = 0; j < game.getGrid().getHeight(); j++) {
 				JComponent ptest = new CaseVue(
-						this.game.getGrid().getGrid()[i][j]);
+						this.game.getGrid().getGrid()[i][j], this);
 				ptest.setBorder(blackline);
 				pan.add(ptest);
 			}
@@ -150,10 +204,11 @@ public class View extends JFrame {
 		setSize(36 * game.getGrid().getHeight(), (int) (status.getSize()
 				.getWidth() + 36 * game.getGrid().getWidth() + 36));
 	}
-
-	protected void againThis() {
-		game.getGrid().hideAll();
-		game.setStatus(Status.Playing);
+	
+	private void majCase() {
+		for (int i = 0 ; i < this.pan.getComponentCount() ; i++){
+			((CaseVue)this.pan.getComponent(i)).setCouleur();
+		}
 	}
 
 	protected void continuer() {
@@ -167,6 +222,12 @@ public class View extends JFrame {
 			againNew();
 		}
 	}
+	
+
+	protected void againThis() {
+		game.getGrid().hideAll();
+		game.setStatus(Status.Playing);
+	}
 
 	protected void againNew() {
 		CaseModele.resetFirstCase();
@@ -176,6 +237,15 @@ public class View extends JFrame {
 
 	protected void quit() {
 		System.exit(0);
+	}
+	
+	private void setColor(Couleur color){
+		this.color = color ;
+		majCase();
+	}
+
+	public Couleur getColor(){
+		return this.color;
 	}
 
 }
