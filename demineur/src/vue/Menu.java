@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +34,8 @@ public class Menu extends JFrame {
 	JSpinner nbBomb;
 
 	JComboBox<String> difficulty;
+	
+	Boolean formRectangle = true; //On changera cette variable par un enum si plus de 2 formes possibles
 
 	/**
 	 * Create the frame.
@@ -93,6 +97,29 @@ public class Menu extends JFrame {
 		lblBombe.setBounds(272, 55, 46, 14);
 		contentPane.add(lblBombe);
 
+		ButtonGroup formGrille = new ButtonGroup();
+		JCheckBox formRectangle = new JCheckBox("Rectangulaire");
+		formRectangle.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				changeForm(true);
+			}
+		});
+		JCheckBox formTriangle = new JCheckBox("Triangulaire");
+		formTriangle.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				changeForm(false);
+			}
+		});
+
+		formGrille.add(formRectangle);
+		formGrille.add(formTriangle);
+
+		formRectangle.setBounds(10, 40, 120, 14);
+		formTriangle.setBounds(140, 40, 120, 14);
+
+		contentPane.add(formTriangle);
+		contentPane.add(formRectangle);
+
 		JButton btnNewButton = new JButton("Start");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -103,6 +130,10 @@ public class Menu extends JFrame {
 		contentPane.add(btnNewButton);
 
 		changeDifficulty();
+	}
+
+	protected void changeForm(boolean rectangle) {
+		this.formRectangle = rectangle;
 	}
 
 	protected void changeDifficulty() {
@@ -141,23 +172,23 @@ public class Menu extends JFrame {
 	}
 
 	protected void start() {
-		Player p1 = new Player("p1");
-		Player[] players = new Player[] { p1 };
+		Game game;
+		if (!this.formRectangle) {
+			game = new Game((Integer) nbLine.getValue(),
+					(Integer) nbBomb.getValue());
 
-		if ((Integer) nbLine.getValue() * (Integer) nbColumn.getValue() < (Integer) nbBomb
-				.getValue()) {
-			nbBomb.setValue((Integer) nbLine.getValue()
-					* (Integer) nbColumn.getValue());
+			ViewTriangle vue = new ViewTriangle(game);
+			vue.setVisible(true);
+
+			this.dispose();
+		} else {
+			game = new Game((Integer) nbLine.getValue(),
+					(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue());
+
+			ViewRectangle vue = new ViewRectangle(game);
+			vue.setVisible(true);
+
+			this.dispose();
 		}
-
-		Game game = new Game((Integer) nbLine.getValue(),
-				(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),
-				players);
-
-		View vue = new View(game);
-		vue.setVisible(true);
-
-		this.dispose();
-
 	}
 }

@@ -8,9 +8,12 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Type;
@@ -24,19 +27,24 @@ public class CaseVue extends JButton {
 
 	private CaseModele caseMod;
 
-	private View view;
+	
+
+	public static Color CasePlay = Color.WHITE;
+	public static Color CaseUnplay = Color.GRAY;
+	public static Color colorFont = Color.DARK_GRAY;
+
 
 	public CaseModele getCaseMod() {
 		return caseMod;
 	}
 
-	public CaseVue(CaseModele caseM, View view) {
+	public CaseVue(CaseModele caseM) {
 		super();
 		this.caseMod = caseM;
-		this.view = view;
 		this.setIconTextGap(-CaseVue.this.getWidth());
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.setHorizontalAlignment(CENTER);
+		this.setBorder(BorderFactory.createRaisedBevelBorder());
 
 		setCouleur();
 
@@ -63,14 +71,7 @@ public class CaseVue extends JButton {
 
 			@Override
 			public void update(Observable arg0, Object arg1) {
-				if (caseMod.isFlag()) {
-					CaseVue.this
-							.setIcon(new ImageIcon("src/vue/image/flag.png"));
-				} else if (caseMod.isClicked()
-						&& caseMod.getType() == Type.Mine) {
-					CaseVue.this
-							.setIcon(new ImageIcon("src/vue/image/bomb.png"));
-				}
+				setImage();
 				setCouleur();
 			}
 
@@ -78,50 +79,33 @@ public class CaseVue extends JButton {
 
 	}
 
-	public void setCouleur() {
-		Color caseNull;
-		Color caseValue;
-		Color colorFont;
-
-		if (this.view.getColor() == Couleur.Bleu) {
-			caseNull = Color.BLUE;
-			caseValue = Color.CYAN;
-			colorFont = Color.DARK_GRAY;
-		} else if (this.view.getColor() == Couleur.Rouge) {
-			caseNull = Color.ORANGE;
-			caseValue = Color.RED;
-			colorFont = Color.WHITE;
-		} else if (this.view.getColor() == Couleur.Vert) {
-			caseNull = Color.YELLOW;
-			caseValue = Color.GREEN;
-			colorFont = Color.BLACK;
-		} else if (this.view.getColor() == Couleur.Violet) {
-			caseNull = Color.PINK;
-			caseValue = new Color(255, 0, 255);
-			colorFont = Color.BLACK;
+	protected void setImage() {
+		if (caseMod.isFlag()) {
+			this.setIcon(new ImageIcon("sprite/flag.png"));
+		} else if (caseMod.isClicked() && caseMod.getType() == Type.Mine) {
+			this.setIcon(new ImageIcon("sprite/bomb.png"));
+		} else if (caseMod.isClicked() && caseMod.getType() == Type.Empty
+				&& caseMod.getValue() > 0) {
+			Font font = new Font("Stencil", Font.BOLD, 18);
+			this.setFont(font);
+			this.setText(String.valueOf(caseMod.getValue()));
 		} else {
-			caseNull = Color.GRAY;
-			caseValue = Color.WHITE;
-			colorFont = Color.DARK_GRAY;
+			this.setIcon(null);
+			this.setText(null);
 		}
+	}
+
+	public void setCouleur() {
+
+		
 
 		if (caseMod.isClicked() && caseMod.getType() == Type.Empty) {
-			if (caseMod.getValue() == 0) {
-				CaseVue.this.setBackground(caseNull);
-			} else {
-				Font font = new Font("Stencil", Font.BOLD, 18);
-				CaseVue.this.setFont(font);
-				CaseVue.this.setText(String.valueOf(caseMod.getValue()));
-				CaseVue.this.setForeground(colorFont);
-				CaseVue.this.setBackground(caseValue);
+			this.setBackground(CasePlay);
+			if (caseMod.getValue() > 0) {
+				this.setForeground(colorFont);
 			}
-		} else if (caseMod.isFlag()
-				|| (caseMod.isClicked() && caseMod.getType() == Type.Mine)) {
-			CaseVue.this.setBackground(caseNull);
 		} else {
-			CaseVue.this.setIcon(null);
-			CaseVue.this.setText(null);
-			CaseVue.this.setBackground(caseValue);
+			this.setBackground(CaseUnplay);
 		}
 
 	}

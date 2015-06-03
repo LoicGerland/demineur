@@ -6,17 +6,14 @@ public class Game extends Observable {
 
 	private Grid grid;
 
-	private Player[] players;
-
 	private int nbBombs;
 
 	private int nbFlags = 0;
 
 	private Status status;
 
-	public Game(int x, int y, int nb, Player[] players) {
-		this.grid = new Grid2D(x, y, this);
-		this.players = players;
+	public Game(int x, int y, int nb) {
+		this.grid = new Grid2DRectangle(x, y, this);
 		if (x * y < nb) {
 			nb = x * y;
 		}
@@ -27,10 +24,24 @@ public class Game extends Observable {
 
 		notifyView();
 	}
+	
+	public Game(int y, int nb) {
+		this.grid = new Grid2DTriangle(y, this);
+		int nbCase = 1;
+		for(int i = 0 ; i < y ; i++){
+			nbCase += (nbCase + 2);
+		}
+		if(nbCase < nb){
+			nb=nbCase;
+		}
+		this.nbBombs = nb;
+		this.status = Status.Playing;
 
-	public Player[] getPlayers() {
-		return players;
+		this.getGrid().setGrid(this.nbBombs);
+
+		notifyView();
 	}
+
 
 	public Grid getGrid() {
 		return grid;

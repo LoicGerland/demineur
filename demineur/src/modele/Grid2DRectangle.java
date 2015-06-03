@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Grid2D extends Grid {
+public class Grid2DRectangle extends Grid {
 
-	public Grid2D(int x, int y, Game game) {
+	public Grid2DRectangle(int x, int y, Game game) {
 		super(x, y, game);
 	}
 

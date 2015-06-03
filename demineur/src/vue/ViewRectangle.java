@@ -31,7 +31,7 @@ import modele.Status;
  * @author Loic
  */
 @SuppressWarnings("serial")
-public class View extends JFrame {
+public class ViewRectangle extends JFrame {
 
 	private Game game;
 	
@@ -41,7 +41,7 @@ public class View extends JFrame {
 	
 	JComponent pan;
 
-	public View(Game g) {
+	public ViewRectangle(Game g) {
 		super();
 		this.game = g;
 		color = Couleur.Bleu; 
@@ -191,7 +191,7 @@ public class View extends JFrame {
 		for (int i = 0; i < game.getGrid().getWidth(); i++) {
 			for (int j = 0; j < game.getGrid().getHeight(); j++) {
 				JComponent ptest = new CaseVue(
-						this.game.getGrid().getGrid()[i][j], this);
+						this.game.getGrid().getGrid()[i][j]);
 				ptest.setBorder(blackline);
 				pan.add(ptest);
 			}
@@ -231,7 +231,7 @@ public class View extends JFrame {
 
 	protected void againNew() {
 		CaseModele.resetFirstCase();
-		View.this.dispose();
+		ViewRectangle.this.dispose();
 		new Menu().setVisible(true);
 	}
 
@@ -241,6 +241,27 @@ public class View extends JFrame {
 	
 	private void setColor(Couleur color){
 		this.color = color ;
+		if (this.getColor() == Couleur.Bleu) {
+			CaseVue.CaseUnplay = Color.BLUE;
+			CaseVue.CasePlay = Color.CYAN;
+			CaseVue.colorFont = Color.WHITE;
+		} else if (this.getColor() == Couleur.Rouge) {
+			CaseVue.CaseUnplay = Color.RED;
+			CaseVue.CasePlay = Color.ORANGE;
+			CaseVue.colorFont = Color.WHITE;
+		} else if (this.getColor() == Couleur.Vert) {
+			CaseVue.CaseUnplay = Color.GREEN;
+			CaseVue.CasePlay = Color.YELLOW;
+			CaseVue.colorFont = Color.BLACK;
+		} else if (this.getColor() == Couleur.Violet) {
+			CaseVue.CaseUnplay = new Color(255, 0, 255);
+			CaseVue.CasePlay = Color.BLUE;
+			CaseVue.colorFont = Color.BLACK;
+		} else {
+			CaseVue.CaseUnplay = Color.GRAY;
+			CaseVue.CasePlay = Color.WHITE;
+			CaseVue.colorFont = Color.DARK_GRAY;
+		}
 		majCase();
 	}
 
