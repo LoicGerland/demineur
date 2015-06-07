@@ -44,7 +44,6 @@ public class Grid2DRectangle extends Grid {
 	public void checkGame(CaseModele caseMod) {
 		if (this.getGame().getStatus() == Status.Playing) {
 			if(this.getGame() instanceof Game2Players) {
-				((Game2Players) this.getGame()).swapPlayer();
 				checkGame2P(caseMod);
 			}
 			else {
@@ -69,7 +68,19 @@ public class Grid2DRectangle extends Grid {
 	}
 	
 	public void checkGame2P(CaseModele caseMod) {
+		if(caseMod.getType() == Type.Mine) {
+			this.getGame().setNbClicked(this.getGame().getNbClicked() + 1);
+			Player p = ((Game2Players) this.getGame()).getCurrentPlayer();
+			p.addScore();
+		}
+		if(caseMod.getType() == Type.Empty) {
+			((Game2Players) this.getGame()).swapPlayer();
+		}
 		
+		if (this.getGame().getNbClicked() == this.getGame().getNbBombs()) {
+			this.getGame().winner();
+		}
+		this.getGame().notifyView();
 	}
 
 	public void showBomb() {

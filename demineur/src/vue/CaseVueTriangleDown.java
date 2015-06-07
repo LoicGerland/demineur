@@ -1,22 +1,17 @@
 package vue;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import java.awt.event.*;
-
-import javax.swing.event.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Polygon;
 
 import modele.CaseModele;
-import modele.Game;
-
-import java.awt.Polygon;
 
 
 public class CaseVueTriangleDown extends CaseVue {
 
-    private Polygon shape;
+	private static final long serialVersionUID = -5293370268452789379L;
+	
+	private Polygon shape;
 
     public CaseVueTriangleDown (CaseModele caseMod) {
     	super(caseMod);

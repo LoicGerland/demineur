@@ -46,16 +46,18 @@ public class CaseModele extends Observable {
 	}
 
 	public void setFlag() {
-		if (!this.clicked) {
-			if(this.flag == true) {
-				this.getGrid().removeFlag();
-				this.flag = false;
+		if(!(this.getGrid().getGame() instanceof Game2Players)) {
+			if (!this.clicked) {
+				if(this.flag == true) {
+					this.getGrid().removeFlag();
+					this.flag = false;
+				}
+				else {
+					this.getGrid().putFlag();
+					this.flag = true;
+				}
+				notifyCase();
 			}
-			else {
-				this.getGrid().putFlag();
-				this.flag = true;
-			}
-			notifyCase();
 		}
 	}
 

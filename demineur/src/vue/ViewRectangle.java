@@ -33,13 +33,13 @@ import modele.Status;
 @SuppressWarnings("serial")
 public class ViewRectangle extends JFrame {
 
-	private Game game;
+	protected Game game;
 	
-	private Couleur color;
+	protected Couleur color;
 
-	JLabel lblNbBomb;
+	protected JLabel lblNbBomb;
 	
-	JComponent pan;
+	protected JComponent pan;
 
 	public ViewRectangle(Game g) {
 		super();
@@ -205,7 +205,7 @@ public class ViewRectangle extends JFrame {
 				.getWidth() + 36 * game.getGrid().getWidth() + 36));
 	}
 	
-	private void majCase() {
+	protected void majCase() {
 		for (int i = 0 ; i < this.pan.getComponentCount() ; i++){
 			((CaseVue)this.pan.getComponent(i)).setCouleur();
 		}
@@ -239,7 +239,7 @@ public class ViewRectangle extends JFrame {
 		System.exit(0);
 	}
 	
-	private void setColor(Couleur color){
+	protected void setColor(Couleur color){
 		this.color = color ;
 		if (this.getColor() == Couleur.Bleu) {
 			CaseVue.CaseUnplay = Color.BLUE;

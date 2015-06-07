@@ -189,9 +189,8 @@ public class Menu extends JFrame {
 	}
 
 	protected void start() {
-		Game game;
 		if (!this.formRectangle) {
-			game = new Game((Integer) nbLine.getValue(),
+			Game game = new Game((Integer) nbLine.getValue(),
 					(Integer) nbBomb.getValue());
 
 			ViewTriangle vue = new ViewTriangle(game);
@@ -201,17 +200,20 @@ public class Menu extends JFrame {
 		} 
 		else {
 			if(!this.twoPlayers){
-				game = new Game((Integer) nbLine.getValue(),
+				Game game = new Game((Integer) nbLine.getValue(),
 					(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue());
+				
+				ViewRectangle vue = new ViewRectangle(game);
+				vue.setVisible(true);
 			}
 			else {
 				Player p1 = new Player("P1");
 				Player p2 = new Player("P2");
-				game = new Game2Players((Integer) nbLine.getValue(), (Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),p1,p2);
+				Game2Players game = new Game2Players((Integer) nbLine.getValue(), (Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),p1,p2);
+				
+				ViewRectangle2Players vue = new ViewRectangle2Players(game);
+				vue.setVisible(true);
 			}
-
-			ViewRectangle vue = new ViewRectangle(game);
-			vue.setVisible(true);
 
 			this.dispose();
 		}
