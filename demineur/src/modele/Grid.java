@@ -63,10 +63,24 @@ public abstract class Grid {
 	public void setGame(Game game) {
 		this.game = game;
 	}
+	
+	public void putFlag() {
+		this.getGame().setNbFlags(this.getGame().getNbFlags() + 1);
+		this.getGame().notifyView();
+	}
+	
+	public void removeFlag() {
+		this.getGame().setNbFlags(this.getGame().getNbFlags() - 1);
+		this.getGame().notifyView();
+	}
 
 	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
 
-	public abstract void checkGame();
+	public abstract void checkGame(CaseModele caseMod);
+	
+	public abstract void checkGame1P(CaseModele caseMod);
+	
+	public abstract void checkGame2P(CaseModele caseMod);
 
 	public abstract void showBomb();
 

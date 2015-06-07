@@ -40,35 +40,36 @@ public class Grid2DRectangle extends Grid {
 
 		return cases;
 	}
-
-	public void checkGame() {
+	
+	public void checkGame(CaseModele caseMod) {
 		if (this.getGame().getStatus() == Status.Playing) {
-			int nbEmpty = 0;
-			int nbFlag = 0;
-			for (int i = 0; i < this.getWidth(); i++) {
-				for (int j = 0; j < this.getHeight(); j++) {
-					CaseModele currentCase = this.getGrid()[i][j];
-					if (currentCase.getType() == Type.Mine
-							&& currentCase.isClicked()) {
-						this.getGame().looser();
-						return;
-					} else if (currentCase.getType() == Type.Empty
-							&& currentCase.isClicked()) {
-						nbEmpty++;
-					}
-					if (currentCase.isFlag()) {
-						nbFlag++;
-					}
-				}
+			if(this.getGame() instanceof Game2Players) {
+				((Game2Players) this.getGame()).swapPlayer();
+				checkGame2P(caseMod);
 			}
-			if (nbEmpty == this.getHeight() * this.getWidth()
+			else {
+				checkGame1P(caseMod); 
+			}
+		}
+	}
+
+	public void checkGame1P(CaseModele caseMod) {
+		if(caseMod.getType() == Type.Mine) {
+			this.getGame().looser();
+		}
+		else if(caseMod.getType() == Type.Empty) {
+			this.getGame().setNbClicked(this.getGame().getNbClicked() + 1);
+		}
+		
+		if (this.getGame().getNbClicked() == this.getHeight() * this.getWidth()
 					- this.getGame().getNbBombs()) {
 				this.getGame().winner();
-				return;
-			}
-			this.getGame().setNbFlags(nbFlag);
-			this.getGame().notifyView();
 		}
+		this.getGame().notifyView();
+	}
+	
+	public void checkGame2P(CaseModele caseMod) {
+		
 	}
 
 	public void showBomb() {

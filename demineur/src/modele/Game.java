@@ -8,7 +8,9 @@ public class Game extends Observable {
 
 	private int nbBombs;
 
-	private int nbFlags = 0;
+	private int nbFlags;
+	
+	private int nbClicked;
 
 	private Status status;
 
@@ -19,6 +21,8 @@ public class Game extends Observable {
 		}
 		this.nbBombs = nb;
 		this.status = Status.Playing;
+		this.nbFlags = 0;
+		this.nbClicked = 0;
 
 		this.getGrid().setGrid(this.nbBombs);
 
@@ -36,6 +40,8 @@ public class Game extends Observable {
 		}
 		this.nbBombs = nb;
 		this.status = Status.Playing;
+		this.nbFlags = 0;
+		this.nbClicked = 0;
 
 		this.getGrid().setGrid(this.nbBombs);
 
@@ -86,4 +92,14 @@ public class Game extends Observable {
 	public void setNbFlags(int nbFlags) {
 		this.nbFlags = nbFlags;
 	}
+
+	public int getNbClicked() {
+		return nbClicked;
+	}
+
+	public void setNbClicked(int nbClicked) {
+		this.nbClicked = nbClicked;
+	}
+	
+	
 }

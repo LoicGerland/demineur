@@ -47,8 +47,14 @@ public class CaseModele extends Observable {
 
 	public void setFlag() {
 		if (!this.clicked) {
-			this.flag = !this.flag;
-			grid.checkGame();
+			if(this.flag == true) {
+				this.getGrid().removeFlag();
+				this.flag = false;
+			}
+			else {
+				this.getGrid().putFlag();
+				this.flag = true;
+			}
 			notifyCase();
 		}
 	}
@@ -65,7 +71,10 @@ public class CaseModele extends Observable {
 			firstCase = false;
 		}
 		click();
-		grid.checkGame();
+	}
+	
+	public Grid getGrid() {
+		return this.grid;
 	}
 
 	public void click() {
@@ -74,9 +83,9 @@ public class CaseModele extends Observable {
 			if (!this.isClicked()) {
 				this.clicked = true;
 				this.playCase();
+				grid.checkGame(this);
+				}
 			}
-		}
-
 	}
 
 	private void moveBomb() {
@@ -117,7 +126,7 @@ public class CaseModele extends Observable {
 				voisin.click();
 			}
 		}
-		grid.checkGame();
+		grid.checkGame(this);
 	}
 
 	public void notifyCase() {

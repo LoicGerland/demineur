@@ -231,7 +231,7 @@ public class ViewRectangle extends JFrame {
 
 	protected void againNew() {
 		CaseModele.resetFirstCase();
-		ViewRectangle.this.dispose();
+		this.dispose();
 		new Menu().setVisible(true);
 	}
 
