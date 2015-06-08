@@ -158,16 +158,4 @@ public class Grid2DTriangle extends Grid {
 		}
 		return grid;
 	}
-
-	@Override
-	public void checkGame1P(CaseModele caseMod) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void checkGame2P(CaseModele caseMod) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import modele.Game;
 import modele.Game2Players;
 import modele.Player;
+
 import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
@@ -102,13 +104,13 @@ public class Menu extends JFrame {
 		contentPane.add(lblBombe);
 
 		ButtonGroup formGrille = new ButtonGroup();
-		JCheckBox formRectangle = new JCheckBox("Rectangulaire");
+		JRadioButton formRectangle = new JRadioButton("Rectangulaire");
 		formRectangle.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				changeForm(true);
 			}
 		});
-		JCheckBox formTriangle = new JCheckBox("Triangulaire");
+		JRadioButton formTriangle = new JRadioButton("Triangulaire");
 		formTriangle.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				changeForm(false);
@@ -117,6 +119,7 @@ public class Menu extends JFrame {
 
 		formGrille.add(formRectangle);
 		formGrille.add(formTriangle);
+		formRectangle.setSelected(true);
 
 		formRectangle.setBounds(15, 31, 120, 14);
 		formTriangle.setBounds(135, 31, 87, 14);
@@ -133,7 +136,7 @@ public class Menu extends JFrame {
 		btnNewButton.setBounds(5, 98, 328, 31);
 		contentPane.add(btnNewButton);
 		
-		JRadioButton rdb2Joueurs = new JRadioButton("2 Joueurs");
+		JCheckBox rdb2Joueurs = new JCheckBox("2 Joueurs");
 		rdb2Joueurs.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				SettwoPlayers();

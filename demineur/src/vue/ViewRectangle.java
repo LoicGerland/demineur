@@ -225,8 +225,7 @@ public class ViewRectangle extends JFrame {
 	
 
 	protected void againThis() {
-		game.getGrid().hideAll();
-		game.setStatus(Status.Playing);
+		game.playAgain();
 	}
 
 	protected void againNew() {

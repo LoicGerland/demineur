@@ -71,8 +71,19 @@ public class CaseModele extends Observable {
 			}
 			firstCase = false;
 		}
-		click();
-		grid.checkGame(this);
+		if (!this.clicked) {
+			click();
+			notifyGrid();
+		}
+
+	}
+
+	private void notifyGrid() {
+		if (this.type == Type.Mine) {
+			grid.gotBomb();
+		} else {
+			grid.gotEmpty();
+		}
 	}
 
 	public Grid getGrid() {
@@ -126,7 +137,7 @@ public class CaseModele extends Observable {
 				if (!voisin.isClicked()
 						&& this.grid.getGame().getStatus() == Status.Playing) {
 					voisin.click();
-					grid.checkGame(voisin);
+					voisin.notifyGrid();
 				}
 			}
 		}

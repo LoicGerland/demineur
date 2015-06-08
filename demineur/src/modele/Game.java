@@ -6,13 +6,13 @@ public class Game extends Observable {
 
 	private Grid grid;
 
-	private int nbBombs;
+	protected int nbBombs;
 
-	private int nbFlags;
-	
-	private int nbClicked;
+	protected int nbFlags;
 
-	private Status status;
+	protected int nbClicked;
+
+	protected Status status;
 
 	public Game(int x, int y, int nb) {
 		this.grid = new Grid2DRectangle(x, y, this);
@@ -28,15 +28,15 @@ public class Game extends Observable {
 
 		notifyView();
 	}
-	
+
 	public Game(int y, int nb) {
 		this.grid = new Grid2DTriangle(y, this);
 		int nbCase = 1;
-		for(int i = 0 ; i < y ; i++){
+		for (int i = 0; i < y; i++) {
 			nbCase += (nbCase + 2);
 		}
-		if(nbCase < nb){
-			nb=nbCase;
+		if (nbCase < nb) {
+			nb = nbCase;
 		}
 		this.nbBombs = nb;
 		this.status = Status.Playing;
@@ -47,7 +47,6 @@ public class Game extends Observable {
 
 		notifyView();
 	}
-
 
 	public Grid getGrid() {
 		return grid;
@@ -100,6 +99,22 @@ public class Game extends Observable {
 	public void setNbClicked(int nbClicked) {
 		this.nbClicked = nbClicked;
 	}
-	
-	
+
+	public void playAgain() {
+		getGrid().hideAll();
+		nbClicked = 0;
+		nbFlags = 0;
+		setStatus(Status.Playing);
+	}
+
+	public void gotBomb() {
+		looser();
+	}
+
+	public void gotEmpty() {
+		nbClicked++;
+		if(nbClicked == (this.getGrid().getHeight() * this.getGrid().getWidth()) - this.nbBombs){
+			winner();
+		}
+	}
 }

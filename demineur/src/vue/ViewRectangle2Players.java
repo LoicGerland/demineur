@@ -31,18 +31,28 @@ public class ViewRectangle2Players extends ViewRectangle {
 	private static final long serialVersionUID = 6831936801716949149L;
 	
 	private Game2Players game2P;
+	
+	private JLabel lblScore1;
+
+	private JLabel lblScore2;
 
 	public ViewRectangle2Players(Game2Players g) {
 		super(g);
-		this.game2P = g;
 		
+		this.game2P = (Game2Players) g;
+
+		lblScore1.setText(((Integer)game2P.getPlayer1().getScore()).toString());
+		lblScore2.setText(((Integer)game2P.getPlayer2().getScore()).toString());
+		lblNbBomb.setText(((Integer)game2P.getNbBombs()).toString());
+		
+				
 		this.game2P.addObserver(new Observer() {
 
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (game2P.getStatus() == Status.Win) {
 					int option = JOptionPane.showConfirmDialog(null,
-							"Voulez-vous continuer à jouer ?",((Game2Players)arg0).getCurrentPlayer().getName() + " à gagné !!",
+							"Voulez-vous continuer à jouer ?",((Game2Players)arg0).getWinner().getName() + " à gagné !!",
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
@@ -65,8 +75,10 @@ public class ViewRectangle2Players extends ViewRectangle {
 					}
 				}
 				if (game2P.getStatus() == Status.Playing) {
-					lblNbBomb.setText(((Integer) (game2P.getNbBombs() - game2P
-							.getNbFlags())).toString());
+
+					lblScore1.setText(((Integer)game2P.getPlayer1().getScore()).toString());
+					lblScore2.setText(((Integer)game2P.getPlayer2().getScore()).toString());
+					lblNbBomb.setText(((Integer)game2P.getNbBombs()).toString());
 				}
 			}
 		});
@@ -158,25 +170,27 @@ public class ViewRectangle2Players extends ViewRectangle {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		JLabel lblScore1 = new JLabel(((Integer) game2P.getPlayer1().getScore()).toString());
-		JLabel lblScore2 = new JLabel(((Integer) game2P.getPlayer2().getScore()).toString());
-		lblNbBomb = new JLabel(((Integer) game2P.getNbBombs()).toString());
+		lblScore1 = new JLabel();
+		lblScore2 = new JLabel();
+		lblNbBomb = new JLabel();
+		status.add(new JLabel("J1 :"));
 		status.add(lblScore1);
 		status.add(lblNbBomb);
+		status.add(new JLabel("J2 :"));
 		status.add(lblScore2);
 
 		setTitle("Démineur");
 		
-		pan = new JPanel(new GridLayout(game2P.getGrid().getWidth(),
-				game2P.getGrid().getHeight()));
+		pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
+				game.getGrid().getHeight()));
 		
 
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1);
 
-		for (int i = 0; i < game2P.getGrid().getWidth(); i++) {
-			for (int j = 0; j < game2P.getGrid().getHeight(); j++) {
+		for (int i = 0; i < game.getGrid().getWidth(); i++) {
+			for (int j = 0; j < game.getGrid().getHeight(); j++) {
 				JComponent ptest = new CaseVue(
-						this.game2P.getGrid().getGrid()[i][j]);
+						this.game.getGrid().getGrid()[i][j]);
 				ptest.setBorder(blackline);
 				pan.add(ptest);
 			}
@@ -186,8 +200,8 @@ public class ViewRectangle2Players extends ViewRectangle {
 		window.add(status, BorderLayout.NORTH);
 		window.add(pan, BorderLayout.CENTER);
 		add(window);
-		setSize(36 * game2P.getGrid().getHeight(), (int) (status.getSize()
-				.getWidth() + 36 * game2P.getGrid().getWidth() + 36));
+		setSize(36 * game.getGrid().getHeight(), (int) (status.getSize()
+				.getWidth() + 36 * game.getGrid().getWidth() + 36));
 	}
 
 }

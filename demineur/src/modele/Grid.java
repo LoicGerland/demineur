@@ -76,12 +76,6 @@ public abstract class Grid {
 
 	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
 
-	public abstract void checkGame(CaseModele caseMod);
-	
-	public abstract void checkGame1P(CaseModele caseMod);
-	
-	public abstract void checkGame2P(CaseModele caseMod);
-
 	public abstract void showBomb();
 
 	public abstract void setGrid(int nbBombs);
@@ -89,4 +83,12 @@ public abstract class Grid {
 	public abstract void hideAll();
 	
 	public abstract void showAll();
+
+	public void gotBomb(){
+		this.game.gotBomb();
+	}
+	
+	public  void gotEmpty(){
+		this.game.gotEmpty();
+	}
 }
