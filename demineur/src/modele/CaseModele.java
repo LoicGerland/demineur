@@ -46,13 +46,12 @@ public class CaseModele extends Observable {
 	}
 
 	public void setFlag() {
-		if(!(this.getGrid().getGame() instanceof Game2Players)) {
+		if (!(this.getGrid().getGame() instanceof Game2Players)) {
 			if (!this.clicked) {
-				if(this.flag == true) {
+				if (this.flag == true) {
 					this.getGrid().removeFlag();
 					this.flag = false;
-				}
-				else {
+				} else {
 					this.getGrid().putFlag();
 					this.flag = true;
 				}
@@ -73,8 +72,9 @@ public class CaseModele extends Observable {
 			firstCase = false;
 		}
 		click();
+		grid.checkGame(this);
 	}
-	
+
 	public Grid getGrid() {
 		return this.grid;
 	}
@@ -85,9 +85,8 @@ public class CaseModele extends Observable {
 			if (!this.isClicked()) {
 				this.clicked = true;
 				this.playCase();
-				grid.checkGame(this);
-				}
 			}
+		}
 	}
 
 	private void moveBomb() {
@@ -121,14 +120,16 @@ public class CaseModele extends Observable {
 	}
 
 	public void setDoubleClick() {
-		List<CaseModele> voisins = grid.getVoisin(this);
-		for (CaseModele voisin : voisins) {
-			if (!voisin.isClicked()
-					&& this.grid.getGame().getStatus() == Status.Playing) {
-				voisin.click();
+		if (!(this.getGrid().getGame() instanceof Game2Players)) {
+			List<CaseModele> voisins = grid.getVoisin(this);
+			for (CaseModele voisin : voisins) {
+				if (!voisin.isClicked()
+						&& this.grid.getGame().getStatus() == Status.Playing) {
+					voisin.click();
+					grid.checkGame(voisin);
+				}
 			}
 		}
-		grid.checkGame(this);
 	}
 
 	public void notifyCase() {
