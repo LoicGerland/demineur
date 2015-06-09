@@ -119,7 +119,7 @@ public class ViewRectangle extends JFrame {
 		
 		
 		
-		JMenu colorMenu = new JMenu("Changer de couleur");
+		JMenu colorMenu = new JMenu("Couleur");
 		
 		JMenuItem colorWhite = new JMenuItem("Blanc");
 		colorWhite.addActionListener(new ActionListener() {
@@ -161,7 +161,6 @@ public class ViewRectangle extends JFrame {
 		});
 		colorMenu.add(colorPurple);
 		
-		menu.add(colorMenu);
 		
 
 		JMenuItem quit = new JMenuItem("Quitter");
@@ -173,6 +172,7 @@ public class ViewRectangle extends JFrame {
 		menu.add(quit);
 		
 		menuBar.add(menu);
+		menuBar.add(colorMenu);
 
 		setJMenuBar(menuBar);
 
@@ -256,7 +256,7 @@ public class ViewRectangle extends JFrame {
 		} else if (this.getColor() == Couleur.Violet) {
 			CaseVue.CaseUnplay = new Color(255, 0, 255);
 			CaseVue.CasePlay = Color.BLUE;
-			CaseVue.colorFont = Color.BLACK;
+			CaseVue.colorFont = Color.WHITE;
 		} else {
 			CaseVue.CaseUnplay = Color.GRAY;
 			CaseVue.CasePlay = Color.WHITE;
