@@ -29,12 +29,12 @@ public class CaseModele extends Observable {
 		return value;
 	}
 
-	public Type getType() {
-		return type;
-	}
-
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public Type getType() {
+		return type;
 	}
 
 	public void setType(Type type) {
@@ -45,15 +45,18 @@ public class CaseModele extends Observable {
 		return flag;
 	}
 
-	public void setFlag() {
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public void hasFlag() {
 		if (!(this.getGrid().getGame() instanceof Game2Players)) {
 			if (!this.clicked) {
-				if (this.flag == true) {
+				this.setFlag(!this.isFlag());
+				if (this.flag == false) {
 					this.getGrid().removeFlag();
-					this.flag = false;
 				} else {
 					this.getGrid().putFlag();
-					this.flag = true;
 				}
 				notifyCase();
 			}
@@ -64,18 +67,23 @@ public class CaseModele extends Observable {
 		return clicked;
 	}
 
-	public void setClicked() {
+	public void setClicked(boolean clicked) {
+		this.clicked = clicked;
+	}
+
+	public void hasClicked() {
 		if (firstCase) {
 			if (this.getType() == Type.Mine) {
 				this.moveBomb();
 			}
 			firstCase = false;
 		}
-		if (!this.clicked) {
-			click();
-			notifyGrid();
+		if (!this.clicked && !this.flag) {
+			playCase();
+			if (this.getGrid().getGame() instanceof Game2Players) {
+				notifyGrid();
+			}
 		}
-
 	}
 
 	private void notifyGrid() {
@@ -90,12 +98,27 @@ public class CaseModele extends Observable {
 		return this.grid;
 	}
 
-	public void click() {
-
-		if (!this.flag) {
-			if (!this.isClicked()) {
-				this.clicked = true;
-				this.playCase();
+	public void playCase() {
+		if (!this.flag && !this.clicked) {
+			this.setClicked(true);
+			if (this.type == Type.Mine) {
+				notifyCase();
+			} else {
+				this.setValue(0);
+				for (CaseModele voisin : grid.getVoisin(this)) {
+					if (voisin.getType() == Type.Mine) {
+						this.setValue(this.getValue() + 1);
+					}
+				}
+				notifyCase();
+				if (this.getValue() <= 0) {
+					for (CaseModele voisin : grid.getVoisin(this)) {
+						voisin.playCase();
+					}
+				}
+			}
+			if (!(this.getGrid().getGame() instanceof Game2Players)) {
+				notifyGrid();
 			}
 		}
 	}
@@ -112,32 +135,14 @@ public class CaseModele extends Observable {
 		this.setType(Type.Mine);
 	}
 
-	private void playCase() {
-		this.setValue(0);
-		List<CaseModele> voisins = grid.getVoisin(this);
-		for (CaseModele voisin : voisins) {
-			if (voisin.getType() == Type.Mine) {
-				this.setValue(this.getValue() + 1);
-			}
-		}
-		notifyCase();
-		if (this.getValue() <= 0 && this.getType() != Type.Mine) {
-			for (CaseModele voisin : voisins) {
-				if (!voisin.isClicked()) {
-					voisin.click();
-				}
-			}
-		}
-	}
-
-	public void setDoubleClick() {
+	public void hasDoubleClick() {
 		if (!(this.getGrid().getGame() instanceof Game2Players)) {
-			List<CaseModele> voisins = grid.getVoisin(this);
-			for (CaseModele voisin : voisins) {
+			for (CaseModele voisin : grid.getVoisin(this)) {
 				if (!voisin.isClicked()
 						&& this.grid.getGame().getStatus() == Status.Playing) {
-					voisin.click();
-					voisin.notifyGrid();
+					voisin.playCase();
+					if (voisin.getType() == Type.Mine && !voisin.isFlag())
+						return;
 				}
 			}
 		}
@@ -157,7 +162,7 @@ public class CaseModele extends Observable {
 	}
 
 	public static void resetFirstCase() {
-		setFirstCase(true);
+		CaseModele.firstCase = true;
 	}
 
 	public static void setFirstCase(boolean firstCase) {

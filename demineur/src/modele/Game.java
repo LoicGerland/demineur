@@ -25,7 +25,7 @@ public class Game extends Observable {
 		this.nbClicked = 0;
 
 		this.getGrid().setGrid(this.nbBombs);
-
+		
 		notifyView();
 	}
 

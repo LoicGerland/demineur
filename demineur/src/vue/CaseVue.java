@@ -50,15 +50,15 @@ public class CaseVue extends JButton {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					caseMod.setFlag();
+					caseMod.hasFlag();
 				}
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					caseMod.setClicked();
+					caseMod.hasClicked();
 				}
 				if (e.getClickCount() == 2 && !e.isConsumed()
 						&& e.getButton() == MouseEvent.BUTTON1) {
 					e.consume();
-					caseMod.setDoubleClick();
+					caseMod.hasDoubleClick();
 				}
 			}
 

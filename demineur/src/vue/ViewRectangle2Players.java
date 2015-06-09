@@ -43,7 +43,7 @@ public class ViewRectangle2Players extends ViewRectangle {
 
 		lblScore1.setText(((Integer)game2P.getPlayer1().getScore()).toString());
 		lblScore2.setText(((Integer)game2P.getPlayer2().getScore()).toString());
-		lblNbBomb.setText(((Integer)game2P.getNbBombs()).toString());
+		lblAffichage.setText(game2P.getCurrentPlayer().getName());
 		
 				
 		this.game2P.addObserver(new Observer() {
@@ -78,7 +78,7 @@ public class ViewRectangle2Players extends ViewRectangle {
 
 					lblScore1.setText(((Integer)game2P.getPlayer1().getScore()).toString());
 					lblScore2.setText(((Integer)game2P.getPlayer2().getScore()).toString());
-					lblNbBomb.setText(((Integer)game2P.getNbBombs()).toString());
+					lblAffichage.setText(game2P.getCurrentPlayer().getName());
 				}
 			}
 		});
@@ -172,10 +172,10 @@ public class ViewRectangle2Players extends ViewRectangle {
 		JPanel status = new JPanel(new FlowLayout());
 		lblScore1 = new JLabel();
 		lblScore2 = new JLabel();
-		lblNbBomb = new JLabel();
+		lblAffichage = new JLabel();
 		status.add(new JLabel("J1 :"));
 		status.add(lblScore1);
-		status.add(lblNbBomb);
+		status.add(lblAffichage);
 		status.add(new JLabel("J2 :"));
 		status.add(lblScore2);
 

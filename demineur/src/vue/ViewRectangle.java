@@ -24,6 +24,7 @@ import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Game;
+import modele.Game2Players;
 import modele.Status;
 
 /**
@@ -37,7 +38,7 @@ public class ViewRectangle extends JFrame {
 	
 	protected Couleur color;
 
-	protected JLabel lblNbBomb;
+	protected JLabel lblAffichage;
 	
 	protected JComponent pan;
 
@@ -83,8 +84,8 @@ public class ViewRectangle extends JFrame {
 						quit();
 					}
 				}
-				if (game.getStatus() == Status.Playing) {
-					lblNbBomb.setText(((Integer) (game.getNbBombs() - game
+				if (game.getStatus() == Status.Playing && !(game instanceof Game2Players) ) {
+					lblAffichage.setText(((Integer) (game.getNbBombs() - game
 							.getNbFlags())).toString());
 				}
 			}
@@ -177,8 +178,8 @@ public class ViewRectangle extends JFrame {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblNbBomb = new JLabel(((Integer) game.getNbBombs()).toString());
-		status.add(lblNbBomb);
+		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		status.add(lblAffichage);
 
 		setTitle("Démineur");
 		

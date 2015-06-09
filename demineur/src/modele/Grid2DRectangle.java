@@ -88,9 +88,9 @@ public class Grid2DRectangle extends Grid {
 			for (int j = 0; j < this.getHeight(); j++) {
 				if (this.getGrid()[i][j].getType() == Type.Mine) {
 					if (this.getGrid()[i][j].isFlag()) {
-						this.getGrid()[i][j].setFlag();
+						this.getGrid()[i][j].setFlag(false);
 					}
-					this.getGrid()[i][j].setClicked();
+					this.getGrid()[i][j].setClicked(true);
 				}
 			}
 		}
@@ -99,7 +99,7 @@ public class Grid2DRectangle extends Grid {
 	public void showAll() {
 		for (int i = 0; i < this.getWidth(); i++) {
 			for (int j = 0; j < this.getHeight(); j++) {
-				this.getGrid()[i][j].setClicked();
+				this.getGrid()[i][j].setClicked(true);
 			}
 		}
 	}

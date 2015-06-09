@@ -7,6 +7,7 @@ public class Game2Players extends Game {
 	private Player player2;
 
 	private Player currentPlayer;
+	
 
 	public Game2Players(int x, int y, int nb, Player p1, Player p2) {
 		super(x, y, nb);
@@ -49,6 +50,7 @@ public class Game2Players extends Game {
 		player2.setScore(0);
 		nbClicked=0;
 		nbFlags=0;
+		notifyView();
 	}
 
 	public Player getWinner() {
@@ -81,5 +83,6 @@ public class Game2Players extends Game {
 	
 	public void gotEmpty(){
 		swapPlayer();
+		notifyView();
 	}
 }
