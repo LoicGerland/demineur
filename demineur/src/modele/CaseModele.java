@@ -49,11 +49,8 @@ public class CaseModele extends Observable {
 		this.flag = flag;
 	}
 
-	// Dépose un drapeau sur la case sélectionner, ce qu'il l'empeche d'être
-	// jouer
 	public void hasFlag() {
-		// Le drapeau ne peut etre poser que lors du mode de jeu en solo
-		if (this.getGrid().getGame().getMode() == Mode.Solo) {
+		if (!(this.getGrid().getGame() instanceof Game2Players)) {
 			if (!this.clicked) {
 				this.setFlag(!this.isFlag());
 				if (this.flag == false) {
@@ -74,7 +71,6 @@ public class CaseModele extends Observable {
 		this.clicked = clicked;
 	}
 
-	// Méthode lancée lorsque le joueur clique sur une case
 	public void hasClicked() {
 		if (firstCase) {
 			if (this.getType() == Type.Mine) {
@@ -84,16 +80,12 @@ public class CaseModele extends Observable {
 		}
 		if (!this.clicked && !this.flag) {
 			playCase();
-
-			// Notifie à Grid qu'un joueur a cliqué sur une case vide dans le
-			// cas d'une partie en multijoueur
-			if (this.getGrid().getGame().getMode() == Mode.Multi) {
+			if (this.getGrid().getGame() instanceof Game2Players) {
 				notifyGrid();
 			}
 		}
 	}
 
-	// Remonte a Grid la case découverte
 	private void notifyGrid() {
 		if (this.type == Type.Mine) {
 			grid.gotBomb();
@@ -106,17 +98,11 @@ public class CaseModele extends Observable {
 		return this.grid;
 	}
 
-	// Méthode qui gère les differents cas de case
 	public void playCase() {
 		if (!this.flag && !this.clicked) {
 			this.setClicked(true);
-
-			// Remonte a la grille une bombe découverte
 			if (this.type == Type.Mine) {
 				notifyCase();
-
-				// Sinon calcule la valeur de la case en fonction du nombre de
-				// bombes autour de celle-ci
 			} else {
 				this.setValue(0);
 				for (CaseModele voisin : grid.getVoisin(this)) {
@@ -125,49 +111,36 @@ public class CaseModele extends Observable {
 					}
 				}
 				notifyCase();
-
-				// Propage l'appel à ces voisin si la valeur est nulle
 				if (this.getValue() <= 0) {
 					for (CaseModele voisin : grid.getVoisin(this)) {
 						voisin.playCase();
 					}
 				}
 			}
-			// Si la partie est en mode solo, on remonte chaque case vide trouvé
-			if (this.getGrid().getGame().getMode() == Mode.Solo) {
+			if (!(this.getGrid().getGame() instanceof Game2Players)) {
 				notifyGrid();
 			}
 		}
 	}
 
-	// Echange la bombe de position avec un de ces voisins
 	private void moveBomb() {
-		if (this.type == Type.Mine) {
-			this.setType(Type.Empty);
-			List<CaseModele> voisins = grid.getVoisin(this);
-			for (CaseModele voisin : voisins) {
-				if (voisin.getType() == Type.Empty) {
-					voisin.setType(Type.Mine);
-					return;
-				}
+		this.setType(Type.Empty);
+		List<CaseModele> voisins = grid.getVoisin(this);
+		for (CaseModele voisin : voisins) {
+			if (voisin.getType() == Type.Empty) {
+				voisin.setType(Type.Mine);
+				return;
 			}
-
-			// Si aucune case vide autour, remet la mine a sa place
-			this.setType(Type.Mine);
 		}
+		this.setType(Type.Mine);
 	}
 
-	//Méthode lancé lors d'un double clique sur une case
 	public void hasDoubleClick() {
-		//Méthode disponible seulement lors d'une partie en solo
-		if (this.getGrid().getGame().getMode() == Mode.Solo) {
-			//Joue toutes les cases voisines sans flag
+		if (!(this.getGrid().getGame() instanceof Game2Players)) {
 			for (CaseModele voisin : grid.getVoisin(this)) {
 				if (!voisin.isClicked()
 						&& this.grid.getGame().getStatus() == Status.Playing) {
 					voisin.playCase();
-					
-					//Si une mine est joué, on stoppe la méthode, le joueur a perdu
 					if (voisin.getType() == Type.Mine && !voisin.isFlag())
 						return;
 				}

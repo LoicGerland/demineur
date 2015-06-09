@@ -24,7 +24,6 @@ import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Game;
-import modele.Mode;
 import modele.Status;
 
 /**
@@ -41,8 +40,6 @@ public class ViewTriangle extends JFrame {
 	JLabel lblNbBomb;
 
 	JComponent pan;
-
-	private JLabel lblCurrentPlayer;
 
 	public ViewTriangle(Game g) {
 		super();
@@ -63,14 +60,13 @@ public class ViewTriangle extends JFrame {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (game.getStatus() == Status.Win) {
-					int option = JOptionPane.showConfirmDialog(null, "Bravo "
-							+ ((Game) arg0).getWinner().getName()
-							+ " ! Voulez-vous continuer à jouer ?", "Gagné !!",
+					int option = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous continuer à jouer ?", "Gagné !!",
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						continuer();
+						againNew();
 					} else {
 						quit();
 					}
@@ -82,22 +78,14 @@ public class ViewTriangle extends JFrame {
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						continuer();
+						againNew();
 					} else {
 						quit();
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-					if (((Game) arg0).getMode() == Mode.Solo) {
-						lblNbBomb.setText(((Integer) (game.getNbBombs() - game
-								.getNbFlags())).toString());
-					} else {
-						lblCurrentPlayer
-								.setText(game.getCurrentPlayer().getName()
-										+ " : "
-										+ ((Integer) game.getCurrentPlayer()
-												.getScore()).toString());
-					}
+					lblNbBomb.setText(((Integer) (game.getNbBombs() - game
+							.getNbFlags())).toString());
 				}
 			}
 		});
@@ -187,12 +175,7 @@ public class ViewTriangle extends JFrame {
 		JPanel status = new JPanel(new FlowLayout());
 		lblNbBomb = new JLabel(((Integer) game.getNbBombs()).toString());
 		status.add(lblNbBomb);
-		if (this.game.getMode() == Mode.Multi) {
-			lblCurrentPlayer = new JLabel(game.getCurrentPlayer().getName()
-					+ " : "
-					+ ((Integer) game.getCurrentPlayer().getScore()).toString());
-			status.add(lblCurrentPlayer);
-		}
+
 		setTitle("Démineur");
 
 		pan = new JPanel(new GridLayout(this.game.getGrid().getHeight(),

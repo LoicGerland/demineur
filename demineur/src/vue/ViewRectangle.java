@@ -24,7 +24,7 @@ import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Game;
-import modele.Mode;
+import modele.Game2Players;
 import modele.Status;
 
 /**
@@ -35,19 +35,17 @@ import modele.Status;
 public class ViewRectangle extends JFrame {
 
 	protected Game game;
-
+	
 	protected Couleur color;
 
-	protected JLabel lblNbBomb;
-
+	protected JLabel lblAffichage;
+	
 	protected JComponent pan;
-
-	private JLabel lblCurrentPlayer;
 
 	public ViewRectangle(Game g) {
 		super();
 		this.game = g;
-		color = Couleur.Bleu;
+		color = Couleur.Bleu; 
 		build();
 
 		addWindowListener(new WindowAdapter() {
@@ -63,9 +61,8 @@ public class ViewRectangle extends JFrame {
 			@Override
 			public void update(Observable arg0, Object arg1) {
 				if (game.getStatus() == Status.Win) {
-					int option = JOptionPane.showConfirmDialog(null, "Bravo "
-							+ ((Game) arg0).getWinner().getName()
-							+ " ! Voulez-vous continuer à jouer ?", "Gagné !!",
+					int option = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous continuer à jouer ?", "Gagné !!",
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 
@@ -87,17 +84,9 @@ public class ViewRectangle extends JFrame {
 						quit();
 					}
 				}
-				if (game.getStatus() == Status.Playing) {
-					if (((Game) arg0).getMode() == Mode.Solo) {
-						lblNbBomb.setText(((Integer) (game.getNbBombs() - game
-								.getNbFlags())).toString());
-					} else {
-						lblCurrentPlayer
-								.setText(game.getCurrentPlayer().getName()
-										+ " : "
-										+ ((Integer) game.getCurrentPlayer()
-												.getScore()).toString());
-					}
+				if (game.getStatus() == Status.Playing && !(game instanceof Game2Players) ) {
+					lblAffichage.setText(((Integer) (game.getNbBombs() - game
+							.getNbFlags())).toString());
 				}
 			}
 		});
@@ -106,7 +95,8 @@ public class ViewRectangle extends JFrame {
 	public void build() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Option");
-
+		
+		
 		JMenu again = new JMenu("Recommencer");
 
 		JMenuItem againThis = new JMenuItem("cette partie");
@@ -124,11 +114,13 @@ public class ViewRectangle extends JFrame {
 			}
 		});
 		again.add(againNew);
-
+		
 		menu.add(again);
-
+		
+		
+		
 		JMenu colorMenu = new JMenu("Couleur");
-
+		
 		JMenuItem colorWhite = new JMenuItem("Blanc");
 		colorWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,7 +152,7 @@ public class ViewRectangle extends JFrame {
 			}
 		});
 		colorMenu.add(colorRed);
-
+		
 		JMenuItem colorPurple = new JMenuItem("Violet");
 		colorPurple.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -168,6 +160,8 @@ public class ViewRectangle extends JFrame {
 			}
 		});
 		colorMenu.add(colorPurple);
+		
+		
 
 		JMenuItem quit = new JMenuItem("Quitter");
 		quit.addActionListener(new ActionListener() {
@@ -176,7 +170,7 @@ public class ViewRectangle extends JFrame {
 			}
 		});
 		menu.add(quit);
-
+		
 		menuBar.add(menu);
 		menuBar.add(colorMenu);
 
@@ -184,19 +178,14 @@ public class ViewRectangle extends JFrame {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblNbBomb = new JLabel(((Integer) game.getNbBombs()).toString());
-		status.add(lblNbBomb);
-		if (this.game.getMode() == Mode.Multi) {
-			lblCurrentPlayer = new JLabel(game.getCurrentPlayer().getName()
-					+ " : "
-					+ ((Integer) game.getCurrentPlayer().getScore()).toString());
-			status.add(lblCurrentPlayer);
-		}
+		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		status.add(lblAffichage);
 
 		setTitle("Démineur");
-
-		pan = new JPanel(new GridLayout(game.getGrid().getWidth(), game
-				.getGrid().getHeight()));
+		
+		pan = new JPanel(new GridLayout(game.getGrid().getWidth(),
+				game.getGrid().getHeight()));
+		
 
 		Border blackline = BorderFactory.createLineBorder(Color.black, 1);
 
@@ -216,10 +205,10 @@ public class ViewRectangle extends JFrame {
 		setSize(36 * game.getGrid().getHeight(), (int) (status.getSize()
 				.getWidth() + 36 * game.getGrid().getWidth() + 36));
 	}
-
+	
 	protected void majCase() {
-		for (int i = 0; i < this.pan.getComponentCount(); i++) {
-			((CaseVue) this.pan.getComponent(i)).setCouleur();
+		for (int i = 0 ; i < this.pan.getComponentCount() ; i++){
+			((CaseVue)this.pan.getComponent(i)).setCouleur();
 		}
 	}
 
@@ -234,6 +223,7 @@ public class ViewRectangle extends JFrame {
 			againNew();
 		}
 	}
+	
 
 	protected void againThis() {
 		game.playAgain();
@@ -248,9 +238,9 @@ public class ViewRectangle extends JFrame {
 	protected void quit() {
 		System.exit(0);
 	}
-
-	protected void setColor(Couleur color) {
-		this.color = color;
+	
+	protected void setColor(Couleur color){
+		this.color = color ;
 		if (this.getColor() == Couleur.Bleu) {
 			CaseVue.CaseUnplay = Color.BLUE;
 			CaseVue.CasePlay = Color.CYAN;
@@ -275,7 +265,7 @@ public class ViewRectangle extends JFrame {
 		majCase();
 	}
 
-	public Couleur getColor() {
+	public Couleur getColor(){
 		return this.color;
 	}
 
