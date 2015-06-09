@@ -7,7 +7,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -15,16 +14,14 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import modele.Game;
-import modele.Game2Players;
 import modele.Player;
-
-import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame {
@@ -42,6 +39,8 @@ public class Menu extends JFrame {
 	Boolean formRectangle = true; //On changera cette variable par un enum si plus de 2 formes possibles
 	
 	Boolean twoPlayers = false;
+	
+	JSpinner nbJoueur;
 
 	/**
 	 * Create the frame.
@@ -121,8 +120,8 @@ public class Menu extends JFrame {
 		formGrille.add(formTriangle);
 		formRectangle.setSelected(true);
 
-		formRectangle.setBounds(15, 31, 120, 14);
-		formTriangle.setBounds(135, 31, 87, 14);
+		formRectangle.setBounds(15, 31, 102, 14);
+		formTriangle.setBounds(119, 31, 92, 14);
 
 		contentPane.add(formTriangle);
 		contentPane.add(formRectangle);
@@ -136,24 +135,20 @@ public class Menu extends JFrame {
 		btnNewButton.setBounds(5, 98, 328, 31);
 		contentPane.add(btnNewButton);
 		
-		JCheckBox rdb2Joueurs = new JCheckBox("2 Joueurs");
-		rdb2Joueurs.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				SettwoPlayers();
-			}
-		});
-		rdb2Joueurs.setBounds(224, 29, 109, 19);
-		contentPane.add(rdb2Joueurs);
+		nbJoueur = new JSpinner();
+		nbJoueur.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		nbJoueur.setBounds(272, 28, 50, 20);
+		contentPane.add(nbJoueur);
+		
+		JLabel lblNbJoueur = new JLabel("Nb Joueur");
+		lblNbJoueur.setBounds(264, 10, 58, 14);
+		contentPane.add(lblNbJoueur);
 
 		changeDifficulty();
 	}
 
 	protected void changeForm(boolean rectangle) {
 		this.formRectangle = rectangle;
-	}
-	
-	protected void SettwoPlayers() {
-		this.twoPlayers = (!this.twoPlayers);
 	}
 
 	protected void changeDifficulty() {
@@ -194,7 +189,7 @@ public class Menu extends JFrame {
 	protected void start() {
 		if (!this.formRectangle) {
 			Game game = new Game((Integer) nbLine.getValue(),
-					(Integer) nbBomb.getValue());
+					(Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
 
 			ViewTriangle vue = new ViewTriangle(game);
 			vue.setVisible(true);
@@ -204,7 +199,7 @@ public class Menu extends JFrame {
 		else {
 			if(!this.twoPlayers){
 				Game game = new Game((Integer) nbLine.getValue(),
-					(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue());
+					(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
 				
 				ViewRectangle vue = new ViewRectangle(game);
 				vue.setVisible(true);
@@ -212,9 +207,9 @@ public class Menu extends JFrame {
 			else {
 				Player p1 = new Player("P1");
 				Player p2 = new Player("P2");
-				Game2Players game = new Game2Players((Integer) nbLine.getValue(), (Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),p1,p2);
+				Game game = new Game((Integer) nbLine.getValue(), (Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
 				
-				ViewRectangle2Players vue = new ViewRectangle2Players(game);
+				ViewRectangle vue = new ViewRectangle(game);
 				vue.setVisible(true);
 			}
 
