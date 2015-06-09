@@ -87,6 +87,7 @@ public abstract class Grid2D {
 						this.getGrid()[i][j].setFlag(false);
 					}
 					this.getGrid()[i][j].setClicked(true);
+					this.getGrid()[i][j].notifyCase();
 				}
 			}
 		}
