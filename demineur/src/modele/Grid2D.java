@@ -3,7 +3,7 @@ package modele;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class Grid {
+public abstract class Grid2D {
 
 	private int height;
 
@@ -15,7 +15,7 @@ public abstract class Grid {
 
 	private Game game;
 
-	public Grid(int x, int y, Game game) {
+	public Grid2D(int x, int y, Game game) {
 		this.height = y;
 		this.width = x;
 		this.map = new HashMap<CaseModele, Point>();
@@ -63,12 +63,12 @@ public abstract class Grid {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	
+
 	public void putFlag() {
 		this.getGame().setNbFlags(this.getGame().getNbFlags() + 1);
 		this.getGame().notifyView();
 	}
-	
+
 	public void removeFlag() {
 		this.getGame().setNbFlags(this.getGame().getNbFlags() - 1);
 		this.getGame().notifyView();
@@ -76,19 +76,48 @@ public abstract class Grid {
 
 	public abstract List<CaseModele> getVoisin(CaseModele caseMod);
 
-	public abstract void showBomb();
-
 	public abstract void setGrid(int nbBombs);
 
-	public abstract void hideAll();
-	
-	public abstract void showAll();
+	public void showBomb() {
+		for (int i = 0; i < this.getWidth(); i++) {
+			for (int j = 0; j < this.getHeight(); j++) {
+				if (this.getGrid()[i][j] != null
+						&& this.getGrid()[i][j].getType() == Type.Mine) {
+					if (this.getGrid()[i][j].isFlag()) {
+						this.getGrid()[i][j].setFlag(false);
+					}
+					this.getGrid()[i][j].setClicked(true);
+				}
+			}
+		}
+	}
 
-	public void gotBomb(){
+	public void hideAll() {
+		for (int i = 0; i < this.getWidth(); i++) {
+			for (int j = 0; j < this.getHeight(); j++) {
+				if (this.getGrid()[i][j] != null) {
+					this.getGrid()[i][j].resetFlag();
+					this.getGrid()[i][j].resetClick();
+					this.getGrid()[i][j].notifyCase();
+				}
+			}
+		}
+	}
+
+	public void showAll() {
+		for (int i = 0; i < this.getWidth(); i++) {
+			for (int j = 0; j < this.getHeight(); j++) {
+				if (this.getGrid()[i][j] != null)
+					this.getGrid()[i][j].setClicked(true);
+			}
+		}
+	}
+
+	public void gotBomb() {
 		this.game.gotBomb();
 	}
-	
-	public  void gotEmpty(){
+
+	public void gotEmpty() {
 		this.game.gotEmpty();
 	}
 }

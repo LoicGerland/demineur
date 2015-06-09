@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Polygon;
@@ -39,6 +40,9 @@ public class CaseVueTriangleDown extends CaseVue {
 
     @Override
     protected void paintComponent(Graphics g) {
+    	if(this.getCaseMod().isClicked()){
+    		g.setColor(Color.BLUE);
+    	} else g.setColor(Color.black);
         super.paintComponent(g);
     	g.drawPolygon(shape);
     }

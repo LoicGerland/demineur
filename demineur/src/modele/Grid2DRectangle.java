@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Grid2DRectangle extends Grid {
+public class Grid2DRectangle extends Grid2D {
 
 	public Grid2DRectangle(int x, int y, Game game) {
 		super(x, y, game);
@@ -40,69 +40,6 @@ public class Grid2DRectangle extends Grid {
 
 		return cases;
 	}
-	
-	public void checkGame(CaseModele caseMod) {
-		if (this.getGame().getStatus() == Status.Playing) {
-			if(this.getGame() instanceof Game2Players) {
-				checkGame2P(caseMod);
-			}
-			else {
-				checkGame1P(caseMod); 
-			}
-		}
-	}
-
-	public void checkGame1P(CaseModele caseMod) {
-		if(caseMod.getType() == Type.Mine) {
-			this.getGame().looser();
-		}
-		else if(caseMod.getType() == Type.Empty) {
-			this.getGame().setNbClicked(this.getGame().getNbClicked() + 1);
-		}
-		
-		if (this.getGame().getNbClicked() == this.getHeight() * this.getWidth()
-					- this.getGame().getNbBombs()) {
-				this.getGame().winner();
-		}
-		this.getGame().notifyView();
-	}
-	
-	public void checkGame2P(CaseModele caseMod) {
-		if(caseMod.getType() == Type.Mine) {
-			this.getGame().setNbClicked(this.getGame().getNbClicked() + 1);
-			Player p = ((Game2Players) this.getGame()).getCurrentPlayer();
-			p.addScore();
-		}
-		if(caseMod.getType() == Type.Empty) {
-			((Game2Players) this.getGame()).swapPlayer();
-		}
-		
-		if (this.getGame().getNbClicked() == this.getGame().getNbBombs()) {
-			this.getGame().winner();
-		}
-		this.getGame().notifyView();
-	}
-
-	public void showBomb() {
-		for (int i = 0; i < this.getWidth(); i++) {
-			for (int j = 0; j < this.getHeight(); j++) {
-				if (this.getGrid()[i][j].getType() == Type.Mine) {
-					if (this.getGrid()[i][j].isFlag()) {
-						this.getGrid()[i][j].setFlag(false);
-					}
-					this.getGrid()[i][j].setClicked(true);
-				}
-			}
-		}
-	}
-
-	public void showAll() {
-		for (int i = 0; i < this.getWidth(); i++) {
-			for (int j = 0; j < this.getHeight(); j++) {
-				this.getGrid()[i][j].setClicked(true);
-			}
-		}
-	}
 
 	public void setGrid(int nbBombs) {
 		Random r = new Random();
@@ -132,13 +69,5 @@ public class Grid2DRectangle extends Grid {
 		}
 	}
 
-	public void hideAll() {
-		for (int i = 0; i < this.getWidth(); i++) {
-			for (int j = 0; j < this.getHeight(); j++) {
-				this.getGrid()[i][j].resetFlag();
-				this.getGrid()[i][j].resetClick();
-				this.getGrid()[i][j].notifyCase();
-			}
-		}
-	}
+
 }

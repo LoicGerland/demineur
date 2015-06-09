@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Grid2DTriangle extends Grid {
+public class Grid2DTriangle extends Grid2D {
 
 	public Grid2DTriangle(int y, Game game) {
 		super((2 * y) - 1, y, game);
@@ -87,16 +87,6 @@ public class Grid2DTriangle extends Grid {
 		return voisin;
 	}
 
-	public void checkGame(CaseModele caseMod) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void showBomb() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setGrid(int nbBombs) {
 		int nb = nbBombs;
 		Random r = new Random();
@@ -129,33 +119,5 @@ public class Grid2DTriangle extends Grid {
 				}
 			}
 		}
-		System.out.println(this.toString());
-	}
-
-	public void hideAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void showAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public String toString() {
-		String grid = "";
-		for (int y = 0; y < this.getHeight(); y++) {
-			for (int x = 0; x < this.getWidth(); x++) {
-				if (this.getGrid()[x][y] == null) {
-					grid += "0";
-				} else if (this.getGrid()[x][y].getType() == Type.Empty) {
-					grid += "1";
-				} else if (this.getGrid()[x][y].getType() == Type.Mine) {
-					grid += "2";
-				}
-			}
-			grid += "\n";
-		}
-		return grid;
 	}
 }

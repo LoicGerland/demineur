@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class Game extends Observable {
 
-	private Grid grid;
+	private Grid2D grid;
 
 	protected int nbBombs;
 
@@ -48,7 +48,7 @@ public class Game extends Observable {
 		notifyView();
 	}
 
-	public Grid getGrid() {
+	public Grid2D getGrid() {
 		return grid;
 	}
 

@@ -66,7 +66,7 @@ public class ViewTriangle extends JFrame {
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						continuer();
+						againNew();
 					} else {
 						quit();
 					}
@@ -78,7 +78,7 @@ public class ViewTriangle extends JFrame {
 							JOptionPane.QUESTION_MESSAGE);
 
 					if (option == JOptionPane.OK_OPTION) {
-						continuer();
+						againNew();
 					} else {
 						quit();
 					}
@@ -235,8 +235,7 @@ public class ViewTriangle extends JFrame {
 	}
 
 	protected void againThis() {
-		game.getGrid().hideAll();
-		game.setStatus(Status.Playing);
+		game.playAgain();
 	}
 
 	protected void againNew() {

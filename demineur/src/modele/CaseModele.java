@@ -13,11 +13,11 @@ public class CaseModele extends Observable {
 
 	private boolean clicked;
 
-	private Grid grid;
+	private Grid2D grid;
 
 	private static boolean firstCase = true;
 
-	public CaseModele(Type t, Grid grid) {
+	public CaseModele(Type t, Grid2D grid) {
 		this.value = 0;
 		this.type = t;
 		this.flag = false;
@@ -94,7 +94,7 @@ public class CaseModele extends Observable {
 		}
 	}
 
-	public Grid getGrid() {
+	public Grid2D getGrid() {
 		return this.grid;
 	}
 
