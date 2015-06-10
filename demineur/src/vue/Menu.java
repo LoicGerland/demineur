@@ -206,7 +206,7 @@ public class Menu extends JFrame {
 					vue.setVisible(true);
 					;
 				} else {
-					Game game = new Game((Integer) nbColumn.getValue(),
+					Game game = new Game((Integer) nbLine.getValue(),
 							(Integer) nbBomb.getValue());
 					ViewTriangle vue = new ViewTriangle(game);
 					vue.setVisible(true);
@@ -222,7 +222,7 @@ public class Menu extends JFrame {
 					vue.setVisible(true);
 					;
 				} else {
-					GameMulti game = new GameMulti((Integer) nbColumn.getValue(),
+					GameMulti game = new GameMulti((Integer) nbLine.getValue(),
 							(Integer) nbBomb.getValue(),
 							(Integer) nbJoueur.getValue());
 					ViewTriangle vue = new ViewTriangle(game);
