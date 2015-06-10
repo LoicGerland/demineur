@@ -24,7 +24,6 @@ import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Game;
-import modele.Mode;
 import modele.Status;
 
 /**
@@ -38,16 +37,14 @@ public class ViewRectangle extends JFrame {
 
 	protected Couleur color;
 
-	protected JLabel lblNbBomb;
+	protected JLabel lblAffichage;
 
 	protected JComponent pan;
-
-	private JLabel lblCurrentPlayer;
 
 	public ViewRectangle(Game g) {
 		super();
 		this.game = g;
-		color = Couleur.Bleu;
+		color = Couleur.Violet;
 		build();
 
 		addWindowListener(new WindowAdapter() {
@@ -88,19 +85,13 @@ public class ViewRectangle extends JFrame {
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-					if (((Game) arg0).getMode() == Mode.Solo) {
-						lblNbBomb.setText(((Integer) (game.getNbBombs() - game
-								.getNbFlags())).toString());
-					} else {
-						lblCurrentPlayer
-								.setText(game.getCurrentPlayer().getName()
-										+ " : "
-										+ ((Integer) game.getCurrentPlayer()
-												.getScore()).toString());
-					}
+						lblAffichage.setText(game.getText());
 				}
 			}
 		});
+		
+
+		setColor(color);
 	}
 
 	public void build() {
@@ -184,14 +175,8 @@ public class ViewRectangle extends JFrame {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblNbBomb = new JLabel(((Integer) game.getNbBombs()).toString());
-		status.add(lblNbBomb);
-		if (this.game.getMode() == Mode.Multi) {
-			lblCurrentPlayer = new JLabel(game.getCurrentPlayer().getName()
-					+ " : "
-					+ ((Integer) game.getCurrentPlayer().getScore()).toString());
-			status.add(lblCurrentPlayer);
-		}
+		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		status.add(lblAffichage);
 
 		setTitle("Démineur");
 

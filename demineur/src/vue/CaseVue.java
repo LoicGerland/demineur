@@ -24,12 +24,9 @@ public class CaseVue extends JButton {
 
 	private CaseModele caseMod;
 
-	
-
 	public static Color CasePlay = Color.WHITE;
 	public static Color CaseUnplay = Color.GRAY;
 	public static Color colorFont = Color.DARK_GRAY;
-
 
 	public CaseModele getCaseMod() {
 		return caseMod;

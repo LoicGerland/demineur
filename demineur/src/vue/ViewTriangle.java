@@ -38,7 +38,7 @@ public class ViewTriangle extends JFrame {
 
 	private Couleur color;
 
-	JLabel lblNbBomb;
+	JLabel lblAffichage;
 
 	JComponent pan;
 
@@ -88,16 +88,7 @@ public class ViewTriangle extends JFrame {
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-					if (((Game) arg0).getMode() == Mode.Solo) {
-						lblNbBomb.setText(((Integer) (game.getNbBombs() - game
-								.getNbFlags())).toString());
-					} else {
-						lblCurrentPlayer
-								.setText(game.getCurrentPlayer().getName()
-										+ " : "
-										+ ((Integer) game.getCurrentPlayer()
-												.getScore()).toString());
-					}
+					lblAffichage.setText(game.getText());
 				}
 			}
 		});
@@ -185,14 +176,8 @@ public class ViewTriangle extends JFrame {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblNbBomb = new JLabel(((Integer) game.getNbBombs()).toString());
-		status.add(lblNbBomb);
-		if (this.game.getMode() == Mode.Multi) {
-			lblCurrentPlayer = new JLabel(game.getCurrentPlayer().getName()
-					+ " : "
-					+ ((Integer) game.getCurrentPlayer().getScore()).toString());
-			status.add(lblCurrentPlayer);
-		}
+		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		status.add(lblAffichage);
 		setTitle("Démineur");
 
 		pan = new JPanel(new GridLayout(this.game.getGrid().getHeight(),

@@ -232,4 +232,15 @@ public class Game extends Observable {
 		}
 		currentPlayer = players.get(i);
 	}
+
+	public String getText() {
+		if( this.mode == Mode.Solo){
+			return ((Integer) (this.getNbBombs() - this.getNbFlags())).toString();
+		} else {
+			return ((Integer) (this.getNbBombs() - this.getNbFlags())).toString() +"  "+this.getCurrentPlayer().getName()
+					+ " : "
+					+ ((Integer) this.getCurrentPlayer()
+							.getScore()).toString();
+		}
+	}
 }
