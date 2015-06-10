@@ -35,7 +35,8 @@ public class GameMulti extends Game {
 		for (Player player : players) {
 			if (player.getScore() > winner.getScore()) {
 				winner = player;
-			} else if (player.getScore() == winner.getScore() && player != winner) {
+			} else if (player.getScore() == winner.getScore()
+					&& player != winner) {
 				winner = null;
 			}
 		}
@@ -74,9 +75,9 @@ public class GameMulti extends Game {
 	}
 
 	public String getText() {
-		return ((Integer) (this.getNbBombs() - this.getNbFlags())).toString()
-				+ "  " + this.getCurrentPlayer().getName() + " : "
-				+ ((Integer) this.getCurrentPlayer().getScore()).toString();
+		return (((Integer) (this.getNbBombs() - this.getNbFlags())).toString()
+				+ " - " + chrono.toString())+ " - "
+				+this.getCurrentPlayer().getName()+":" +((Integer) this.getCurrentPlayer().getScore()).toString();
 	}
 
 	// Méthode déclaenché lorsqu'une case vide est découverte

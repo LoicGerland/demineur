@@ -4,6 +4,9 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JOptionPane;
 
 public class Game extends Observable {
 
@@ -21,6 +24,8 @@ public class Game extends Observable {
 
 	protected int nbCase;
 
+	protected Chrono chrono;
+
 	// Creer une partie avec une grille rectangulaire
 	public Game(int x, int y, int nb) {
 		this.grid = new Grid2DRectangle(x, y, this);
@@ -30,9 +35,7 @@ public class Game extends Observable {
 		}
 		this.nbBombs = nb;
 		nbCase -= nbBombs;
-		this.status = Status.Playing;
-		this.nbFlags = 0;
-		this.nbClicked = 0;
+		this.init();
 		this.currentPlayer = new Player("P1");
 		this.getGrid().setGrid(this.nbBombs);
 
@@ -52,14 +55,32 @@ public class Game extends Observable {
 		this.nbBombs = nb;
 		nbCase -= nbBombs;
 
-		this.status = Status.Playing;
-		this.nbFlags = 0;
-		this.nbClicked = 0;
+		init();
 		this.currentPlayer = new Player("P1");
 
 		this.getGrid().setGrid(this.nbBombs);
 
 		notifyView();
+	}
+
+	private void init() {
+		this.status = Status.Playing;
+		this.nbFlags = 0;
+		this.nbClicked = 0;
+		chrono = new Chrono();
+		chrono.demarrer();
+		this.chrono.addObserver(new Observer() {
+
+			@Override
+			public void update(Observable arg0, Object arg1) {
+					majScore();
+			}
+		});
+	}
+
+	protected void majScore() {
+		if (this.status == Status.Playing)
+				this.notifyView();
 	}
 
 	public Grid2D getGrid() {
@@ -121,9 +142,7 @@ public class Game extends Observable {
 	// Cache les cases et remet les compteurs a zéro
 	public void playAgain() {
 		getGrid().hideAll();
-		nbClicked = 0;
-		nbFlags = 0;
-		setStatus(Status.Playing);
+		init();
 	}
 
 	// Méthode déclenché lorsqu'une mine est découverte
@@ -142,7 +161,8 @@ public class Game extends Observable {
 	}
 
 	public String getText() {
-		return ((Integer) (this.getNbBombs() - this.getNbFlags())).toString();
+		return (((Integer) (this.getNbBombs() - this.getNbFlags())).toString()
+				+ " - " + chrono.toString());
 	}
 
 	public Player getWinner() {

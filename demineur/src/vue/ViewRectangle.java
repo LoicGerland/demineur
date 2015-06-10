@@ -175,7 +175,7 @@ public class ViewRectangle extends JFrame {
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		lblAffichage = new JLabel(game.getText());
 		status.add(lblAffichage);
 
 		setTitle("Démineur");
