@@ -53,7 +53,7 @@ public class CaseModele extends Observable {
 	// jouer
 	public void hasFlag() {
 		// Le drapeau ne peut etre poser que lors du mode de jeu en solo
-		if (this.getGrid().getGame().getMode() == Mode.Solo) {
+		if (!(this.getGrid().getGame() instanceof GameMulti)) {
 			if (!this.clicked) {
 				this.setFlag(!this.isFlag());
 				if (this.flag == false) {
@@ -87,7 +87,7 @@ public class CaseModele extends Observable {
 
 			// Notifie à Grid qu'un joueur a cliqué sur une case vide dans le
 			// cas d'une partie en multijoueur
-			if (this.getGrid().getGame().getMode() == Mode.Multi) {
+			if (this.getGrid().getGame() instanceof GameMulti) {
 				notifyGrid();
 			}
 		}
@@ -134,7 +134,7 @@ public class CaseModele extends Observable {
 				}
 			}
 			// Si la partie est en mode solo, on remonte chaque case vide trouvé
-			if (this.getGrid().getGame().getMode() == Mode.Solo) {
+			if (! (this.getGrid().getGame() instanceof GameMulti)) {
 				notifyGrid();
 			}
 		}
@@ -160,7 +160,7 @@ public class CaseModele extends Observable {
 	//Méthode lancé lors d'un double clique sur une case
 	public void hasDoubleClick() {
 		//Méthode disponible seulement lors d'une partie en solo
-		if (this.getGrid().getGame().getMode() == Mode.Solo) {
+		if (!(this.getGrid().getGame() instanceof GameMulti)) {
 			//Joue toutes les cases voisines sans flag
 			for (CaseModele voisin : grid.getVoisin(this)) {
 				if (!voisin.isClicked()

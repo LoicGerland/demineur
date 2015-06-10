@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import modele.Game;
+import modele.GameMulti;
 import modele.Player;
 
 @SuppressWarnings("serial")
@@ -35,11 +36,10 @@ public class Menu extends JFrame {
 	JSpinner nbBomb;
 
 	JComboBox<String> difficulty;
-	
-	Boolean formRectangle = true; //On changera cette variable par un enum si plus de 2 formes possibles
-	
-	Boolean twoPlayers = false;
-	
+
+	Boolean formRectangle = true; // On changera cette variable par un enum si
+									// plus de 2 formes possibles
+
 	JSpinner nbJoueur;
 
 	/**
@@ -134,12 +134,13 @@ public class Menu extends JFrame {
 		});
 		btnNewButton.setBounds(5, 98, 328, 31);
 		contentPane.add(btnNewButton);
-		
+
 		nbJoueur = new JSpinner();
-		nbJoueur.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		nbJoueur.setModel(new SpinnerNumberModel(new Integer(1),
+				new Integer(1), null, new Integer(1)));
 		nbJoueur.setBounds(272, 28, 50, 20);
 		contentPane.add(nbJoueur);
-		
+
 		JLabel lblNbJoueur = new JLabel("Nb Joueur");
 		lblNbJoueur.setBounds(264, 10, 58, 14);
 		contentPane.add(lblNbJoueur);
@@ -189,30 +190,46 @@ public class Menu extends JFrame {
 	protected void start() {
 		if (!this.formRectangle) {
 			Game game = new Game((Integer) nbLine.getValue(),
-					(Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
+					(Integer) nbBomb.getValue(), (Integer) nbJoueur.getValue());
 
 			ViewTriangle vue = new ViewTriangle(game);
 			vue.setVisible(true);
 
 			this.dispose();
-		} 
-		else {
-			if(!this.twoPlayers){
-				Game game = new Game((Integer) nbLine.getValue(),
-					(Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
-				
-				ViewRectangle vue = new ViewRectangle(game);
-				vue.setVisible(true);
-			}
-			else {
-				Player p1 = new Player("P1");
-				Player p2 = new Player("P2");
-				Game game = new Game((Integer) nbLine.getValue(), (Integer) nbColumn.getValue(), (Integer) nbBomb.getValue(),(Integer) nbJoueur.getValue());
-				
-				ViewRectangle vue = new ViewRectangle(game);
-				vue.setVisible(true);
-			}
+		} else {
+			if ((Integer) this.nbJoueur.getValue() == 1) {
+				if (this.formRectangle) {
+					Game game = new Game((Integer) nbLine.getValue(),
+							(Integer) nbColumn.getValue(),
+							(Integer) nbBomb.getValue());
+					ViewRectangle vue = new ViewRectangle(game);
+					vue.setVisible(true);
+					;
+				} else {
+					Game game = new Game((Integer) nbColumn.getValue(),
+							(Integer) nbBomb.getValue());
+					ViewTriangle vue = new ViewTriangle(game);
+					vue.setVisible(true);
 
+				}
+			} else {
+				if (this.formRectangle) {
+					GameMulti game = new GameMulti((Integer) nbLine.getValue(),
+							(Integer) nbColumn.getValue(),
+							(Integer) nbBomb.getValue(),
+							(Integer) nbJoueur.getValue());
+					ViewRectangle vue = new ViewRectangle(game);
+					vue.setVisible(true);
+					;
+				} else {
+					GameMulti game = new GameMulti((Integer) nbColumn.getValue(),
+							(Integer) nbBomb.getValue(),
+							(Integer) nbJoueur.getValue());
+					ViewTriangle vue = new ViewTriangle(game);
+					vue.setVisible(true);
+
+				}
+			}
 			this.dispose();
 		}
 	}
