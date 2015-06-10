@@ -42,8 +42,6 @@ public class ViewTriangle extends JFrame {
 
 	JComponent pan;
 
-	private JLabel lblCurrentPlayer;
-
 	public ViewTriangle(Game g) {
 		super();
 		this.game = g;

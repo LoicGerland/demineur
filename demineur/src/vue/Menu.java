@@ -188,49 +188,38 @@ public class Menu extends JFrame {
 	}
 
 	protected void start() {
-		if (!this.formRectangle) {
-			Game game = new Game((Integer) nbLine.getValue(),
-					(Integer) nbBomb.getValue(), (Integer) nbJoueur.getValue());
-
-			ViewTriangle vue = new ViewTriangle(game);
-			vue.setVisible(true);
-
-			this.dispose();
-		} else {
-			if ((Integer) this.nbJoueur.getValue() == 1) {
-				if (this.formRectangle) {
-					Game game = new Game((Integer) nbLine.getValue(),
-							(Integer) nbColumn.getValue(),
-							(Integer) nbBomb.getValue());
-					ViewRectangle vue = new ViewRectangle(game);
-					vue.setVisible(true);
-					;
-				} else {
-					Game game = new Game((Integer) nbLine.getValue(),
-							(Integer) nbBomb.getValue());
-					ViewTriangle vue = new ViewTriangle(game);
-					vue.setVisible(true);
-
-				}
+		if ((Integer) this.nbJoueur.getValue() == 1) {
+			if (this.formRectangle) {
+				Game game = new Game((Integer) nbLine.getValue(),
+						(Integer) nbColumn.getValue(),
+						(Integer) nbBomb.getValue());
+				ViewRectangle vue = new ViewRectangle(game);
+				vue.setVisible(true);
 			} else {
-				if (this.formRectangle) {
-					GameMulti game = new GameMulti((Integer) nbLine.getValue(),
-							(Integer) nbColumn.getValue(),
-							(Integer) nbBomb.getValue(),
-							(Integer) nbJoueur.getValue());
-					ViewRectangle vue = new ViewRectangle(game);
-					vue.setVisible(true);
-					;
-				} else {
-					GameMulti game = new GameMulti((Integer) nbLine.getValue(),
-							(Integer) nbBomb.getValue(),
-							(Integer) nbJoueur.getValue());
-					ViewTriangle vue = new ViewTriangle(game);
-					vue.setVisible(true);
+				Game game = new Game((Integer) nbLine.getValue(),
+						(Integer) nbBomb.getValue());
+				ViewTriangle vue = new ViewTriangle(game);
+				vue.setVisible(true);
 
-				}
 			}
-			this.dispose();
+		} else {
+			if (this.formRectangle) {
+				GameMulti game = new GameMulti((Integer) nbLine.getValue(),
+						(Integer) nbColumn.getValue(),
+						(Integer) nbBomb.getValue(),
+						(Integer) nbJoueur.getValue());
+				ViewRectangle vue = new ViewRectangle(game);
+				vue.setVisible(true);
+				;
+			} else {
+				GameMulti game = new GameMulti((Integer) nbLine.getValue(),
+						(Integer) nbBomb.getValue(),
+						(Integer) nbJoueur.getValue());
+				ViewTriangle vue = new ViewTriangle(game);
+				vue.setVisible(true);
+
+			}
 		}
+		this.dispose();
 	}
 }
