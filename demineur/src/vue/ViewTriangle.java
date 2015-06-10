@@ -24,7 +24,6 @@ import javax.swing.border.Border;
 
 import modele.CaseModele;
 import modele.Game;
-import modele.Mode;
 import modele.Status;
 
 /**
@@ -86,7 +85,7 @@ public class ViewTriangle extends JFrame {
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-					lblAffichage.setText(game.getText());
+						lblAffichage.setText(game.getText());
 				}
 			}
 		});
@@ -158,8 +157,6 @@ public class ViewTriangle extends JFrame {
 		});
 		colorMenu.add(colorPurple);
 
-		menu.add(colorMenu);
-
 		JMenuItem quit = new JMenuItem("Quitter");
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -169,12 +166,14 @@ public class ViewTriangle extends JFrame {
 		menu.add(quit);
 
 		menuBar.add(menu);
+		
+		//menuBar.add(colorMenu);
 
 		setJMenuBar(menuBar);
 
 		JComponent window = new JPanel(new BorderLayout());
 		JPanel status = new JPanel(new FlowLayout());
-		lblAffichage = new JLabel(((Integer) game.getNbBombs()).toString());
+		lblAffichage = new JLabel(this.game.getText());
 		status.add(lblAffichage);
 		setTitle("Démineur");
 

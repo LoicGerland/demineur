@@ -77,7 +77,7 @@ public class GameMulti extends Game {
 	public String getText() {
 		return (((Integer) (this.getNbBombs() - this.getNbFlags())).toString()
 				+ " - " + chrono.toString())+ " - "
-				+this.getCurrentPlayer().getName()+":" +((Integer) this.getCurrentPlayer().getScore()).toString();
+				+this.getCurrentPlayer().getName()+" : " +((Integer) this.getCurrentPlayer().getScore()).toString();
 	}
 
 	// Méthode déclaenché lorsqu'une case vide est découverte

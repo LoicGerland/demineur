@@ -9,7 +9,6 @@ import java.awt.event.ItemListener;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +21,6 @@ import javax.swing.border.EmptyBorder;
 
 import modele.Game;
 import modele.GameMulti;
-import modele.Player;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame {
@@ -47,14 +45,14 @@ public class Menu extends JFrame {
 	 */
 	public Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 349, 174);
+		setBounds(100, 100, 371, 174);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblTitre = new JLabel("MENU");
-		lblTitre.setBounds(5, 5, 317, 19);
+		lblTitre.setBounds(5, 5, 350, 19);
 		lblTitre.setFont(new Font("Stencil", Font.PLAIN, 18));
 		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblTitre);
@@ -120,8 +118,8 @@ public class Menu extends JFrame {
 		formGrille.add(formTriangle);
 		formRectangle.setSelected(true);
 
-		formRectangle.setBounds(15, 31, 102, 14);
-		formTriangle.setBounds(119, 31, 92, 14);
+		formRectangle.setBounds(15, 31, 120, 14);
+		formTriangle.setBounds(138, 31, 120, 14);
 
 		contentPane.add(formTriangle);
 		contentPane.add(formRectangle);
@@ -138,11 +136,11 @@ public class Menu extends JFrame {
 		nbJoueur = new JSpinner();
 		nbJoueur.setModel(new SpinnerNumberModel(new Integer(1),
 				new Integer(1), null, new Integer(1)));
-		nbJoueur.setBounds(272, 28, 50, 20);
+		nbJoueur.setBounds(277, 28, 50, 20);
 		contentPane.add(nbJoueur);
 
 		JLabel lblNbJoueur = new JLabel("Nb Joueur");
-		lblNbJoueur.setBounds(264, 10, 58, 14);
+		lblNbJoueur.setBounds(277, 8, 58, 14);
 		contentPane.add(lblNbJoueur);
 
 		changeDifficulty();
