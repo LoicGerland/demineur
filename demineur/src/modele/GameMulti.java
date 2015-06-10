@@ -31,15 +31,19 @@ public class GameMulti extends Game {
 
 	// Retourne le joueur avec le plus haut score, null si égalité
 	public Player getWinner() {
-		Player winner = currentPlayer;
+		boolean egalite=false;
+		Player winner = new Player("");
 		for (Player player : players) {
 			if (player.getScore() > winner.getScore()) {
 				winner = player;
+				egalite=false;
 			} else if (player.getScore() == winner.getScore()
 					&& player != winner) {
-				winner = null;
+				egalite = true;
 			}
 		}
+		if(egalite)
+			winner = null;
 		return winner;
 	}
 
