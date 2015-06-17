@@ -200,9 +200,11 @@ public class Menu extends JFrame{
 
 	protected void changeMode() {
 		if(rdbtnSolo.isSelected()){
+			nbJoueur.setModel(new SpinnerNumberModel(1, 1, 1, 1));
 			nbJoueur.setValue(1);
 			nbJoueur.setEnabled(false);
 		} else if (rdbtnMulti.isSelected()){
+			nbJoueur.setModel(new SpinnerNumberModel(2, 2, 100, 1));
 			nbJoueur.setEnabled(true);
 		}
 	}
