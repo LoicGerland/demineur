@@ -13,15 +13,8 @@ public class Main {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-
 				Menu window = new Menu();
 				window.setVisible(true);
-
-			}
-		});
-
 	}
 
 }

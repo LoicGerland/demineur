@@ -42,13 +42,14 @@ public class Game extends Observable {
 	public Game(int y, int nb) {
 		setChrono();
 		this.grid = new Grid2DTriangle(y, this);
-		nbCase = 1;
-		for (int i = 1; i < y; i++) {
-			nbCase += nbCase + 2;
+		nbCase = 0;
+		for (int i = 1; i <= y; i++) {
+			nbCase += (2*i) - 1;
 		}
 		if (nbCase < nb) {
 			nb = nbCase;
 		}
+		System.out.println(nbClicked +" "+nbCase);
 		this.nbBombs = nb;
 		nbCase -= nbBombs;
 
@@ -157,14 +158,15 @@ public class Game extends Observable {
 		looser();
 	}
 
-	// Méthode déclaenché lorsqu'une case vide est découverte
+	// Méthode déclenché lorsqu'une case vide est découverte
 	public void gotEmpty() {
 		nbClicked++;
 
 		// S'il atteinds le nombre de case vide alors victoire !
-		if (nbClicked == nbCase) {
+		if (nbClicked >= nbCase) {
 			winner();
 		}
+		System.out.println(nbClicked +" "+nbCase);
 	}
 
 	public String getText() {

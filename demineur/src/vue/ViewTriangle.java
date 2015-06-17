@@ -35,8 +35,6 @@ public class ViewTriangle extends JFrame {
 
 	private Game game;
 
-	private Couleur color;
-
 	JLabel lblAffichage;
 
 	JComponent pan;
@@ -44,7 +42,7 @@ public class ViewTriangle extends JFrame {
 	public ViewTriangle(Game g) {
 		super();
 		this.game = g;
-		color = Couleur.Bleu;
+		CaseVue.colorFont = Color.BLACK;
 		build();
 
 		addWindowListener(new WindowAdapter() {
@@ -114,60 +112,6 @@ public class ViewTriangle extends JFrame {
 		again.add(againNew);
 
 		menu.add(again);
-
-		JMenu colorMenu = new JMenu("Changer de couleur");
-
-		JMenuItem colorWhite = new JMenuItem("Blanc");
-		colorWhite.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setColor(Couleur.Blanc);
-			}
-		});
-		colorMenu.add(colorWhite);
-
-		JMenuItem colorBlue = new JMenuItem("Bleu");
-		colorBlue.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setColor(Couleur.Bleu);
-			}
-		});
-		colorMenu.add(colorBlue);
-
-		JMenuItem colorGreen = new JMenuItem("Vert");
-		colorGreen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setColor(Couleur.Vert);
-			}
-		});
-		colorMenu.add(colorGreen);
-
-		JMenuItem colorRed = new JMenuItem("Rouge");
-		colorRed.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setColor(Couleur.Rouge);
-			}
-		});
-		colorMenu.add(colorRed);
-
-		JMenuItem colorPurple = new JMenuItem("Violet");
-		colorPurple.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setColor(Couleur.Violet);
-			}
-		});
-		colorMenu.add(colorPurple);
-
-		JMenuItem quit = new JMenuItem("Quitter");
-		quit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				quit();
-			}
-		});
-		menu.add(quit);
-
-		menuBar.add(menu);
-		
-		//menuBar.add(colorMenu);
 
 		setJMenuBar(menuBar);
 
@@ -246,14 +190,4 @@ public class ViewTriangle extends JFrame {
 	protected void quit() {
 		System.exit(0);
 	}
-
-	private void setColor(Couleur color) {
-		this.color = color;
-		majCase();
-	}
-
-	public Couleur getColor() {
-		return this.color;
-	}
-
 }

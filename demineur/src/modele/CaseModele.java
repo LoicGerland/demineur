@@ -134,7 +134,7 @@ public class CaseModele extends Observable {
 				}
 			}
 			// Si la partie est en mode solo, on remonte chaque case vide trouvé
-			if (! (this.getGrid().getGame() instanceof GameMulti)) {
+			if (!(this.getGrid().getGame() instanceof GameMulti)) {
 				notifyGrid();
 			}
 		}
@@ -157,17 +157,18 @@ public class CaseModele extends Observable {
 		}
 	}
 
-	//Méthode lancé lors d'un double clique sur une case
+	// Méthode lancé lors d'un double clique sur une case
 	public void hasDoubleClick() {
-		//Méthode disponible seulement lors d'une partie en solo
+		// Méthode disponible seulement lors d'une partie en solo
 		if (!(this.getGrid().getGame() instanceof GameMulti)) {
-			//Joue toutes les cases voisines sans flag
+			// Joue toutes les cases voisines sans flag
 			for (CaseModele voisin : grid.getVoisin(this)) {
 				if (!voisin.isClicked()
 						&& this.grid.getGame().getStatus() == Status.Playing) {
 					voisin.playCase();
-					
-					//Si une mine est joué, on stoppe la méthode, le joueur a perdu
+
+					// Si une mine est joué, on stoppe la méthode, le joueur a
+					// perdu
 					if (voisin.getType() == Type.Mine && !voisin.isFlag())
 						return;
 				}
