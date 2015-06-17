@@ -1,5 +1,13 @@
 package vue;
 
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+
+import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,214 +16,263 @@ import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.JSeparator;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 import modele.Game;
 import modele.GameMulti;
 
-@SuppressWarnings("serial")
-public class Menu extends JFrame {
-
-	private JPanel contentPane;
-
-	JSpinner nbLine;
-
-	JSpinner nbColumn;
-
-	JSpinner nbBomb;
-
-	JComboBox<String> difficulty;
-
-	Boolean formRectangle = true; // On changera cette variable par un enum si
-									// plus de 2 formes possibles
-
-	JSpinner nbJoueur;
+public class Menu extends JFrame{
 
 	/**
-	 * Create the frame.
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	private JRadioButton rdbtnSolo;
+
+	private JRadioButton rdbtnMulti;
+
+	private JRadioButton rdbtnRectangle;
+	
+	private JRadioButton rdbtnTriangle;
+
+	private JSpinner nbJoueur;
+
+	private JSpinner nbLigne;
+
+	private JSpinner nbColonne;
+
+	private JSpinner nbBombe;
+	
+	
+	
+	private JComboBox<String> difficulty;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Menu window = new Menu();
+					window.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
 	 */
 	public Menu() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 371, 174);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		initialize();
+	}
 
-		JLabel lblTitre = new JLabel("MENU");
-		lblTitre.setBounds(5, 5, 350, 19);
-		lblTitre.setFont(new Font("Stencil", Font.PLAIN, 18));
-		lblTitre.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblTitre);
-
-		nbLine = new JSpinner();
-		nbLine.setModel(new SpinnerNumberModel(1, 1, 18, 1));
-		nbLine.setBounds(157, 67, 50, 20);
-		contentPane.add(nbLine);
-
-		nbColumn = new JSpinner();
-		nbColumn.setModel(new SpinnerNumberModel(1, 1, 32, 1));
-		nbColumn.setBounds(217, 67, 50, 20);
-		contentPane.add(nbColumn);
-
-		nbBomb = new JSpinner();
-		nbBomb.setModel(new SpinnerNumberModel(1, 1, 576, 1));
-		nbBomb.setBounds(277, 67, 50, 20);
-		contentPane.add(nbBomb);
-
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		this.setBounds(100, 100, 271, 272);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(null);
+		
+		JLabel lblTitle = new JLabel("Menu");
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(0, 0, 245, 29);
+		this.getContentPane().add(lblTitle);
+		
+		ButtonGroup modeSoloMulti = new ButtonGroup();
+		
+		rdbtnSolo = new JRadioButton("Solo");
+		rdbtnSolo.setBounds(6, 40, 109, 23);
+		this.getContentPane().add(rdbtnSolo);
+		modeSoloMulti.add(rdbtnSolo);
+		
+		rdbtnMulti = new JRadioButton("Multi");
+		rdbtnMulti.setBounds(117, 40, 73, 23);
+		this.getContentPane().add(rdbtnMulti);
+		modeSoloMulti.add(rdbtnMulti);
+		
+		rdbtnSolo.setSelected(true);
+		
+		rdbtnMulti.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				changeMode();
+			}
+		});
+		rdbtnSolo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				changeMode();
+			}
+		});
+		
+		nbJoueur = new JSpinner();
+		nbJoueur.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		nbJoueur.setBounds(199, 41, 41, 20);
+		this.getContentPane().add(nbJoueur);
+		nbJoueur.setEnabled(false);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 70, 261, 3);
+		this.getContentPane().add(separator);
+		
 		difficulty = new JComboBox<String>();
 		difficulty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				changeDifficulty();
+				changeDifficulty();				
 			}
 		});
 		difficulty.setModel(new DefaultComboBoxModel<String>(new String[] {
 				"Facile", "Moyen", "Difficile", "Personnalis\u00E9" }));
 		difficulty.setToolTipText("");
-		difficulty.setBounds(15, 67, 120, 20);
-		contentPane.add(difficulty);
-
+		difficulty.setBounds(106, 130, 140, 20);
+		this.getContentPane().add(difficulty);
+		
+		ButtonGroup form = new ButtonGroup();
+		
+		rdbtnRectangle = new JRadioButton("Rectangle");
+		rdbtnRectangle.setBounds(6, 80, 109, 23);
+		this.getContentPane().add(rdbtnRectangle);
+		form.add(rdbtnRectangle);
+		rdbtnRectangle.setSelected(true);
+		
+		rdbtnTriangle = new JRadioButton("Triangle");
+		rdbtnTriangle.setBounds(117, 80, 109, 23);
+		this.getContentPane().add(rdbtnTriangle);
+		form.add(rdbtnTriangle);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(0, 116, 261, 3);
+		this.getContentPane().add(separator_1);
+		
 		JLabel lblDifficult = new JLabel("Difficult\u00E9");
-		lblDifficult.setBounds(19, 52, 66, 14);
-		contentPane.add(lblDifficult);
-
-		JLabel lblLigne = new JLabel("Ligne");
-		lblLigne.setBounds(161, 52, 46, 14);
-		contentPane.add(lblLigne);
-
+		lblDifficult.setBounds(10, 133, 76, 14);
+		this.getContentPane().add(lblDifficult);
+		
+		nbLigne = new JSpinner();
+		nbLigne.setModel(new SpinnerNumberModel(1, 1, 20, 1));
+		nbLigne.setBounds(20, 176, 66, 20);
+		this.getContentPane().add(nbLigne);
+		
+		nbColonne = new JSpinner();
+		nbColonne.setModel(new SpinnerNumberModel(1, 1, 40, 1));
+		nbColonne.setBounds(96, 176, 60, 20);
+		this.getContentPane().add(nbColonne);
+		
+		nbBombe = new JSpinner();
+		nbBombe.setModel(new SpinnerNumberModel(1, 1, 799, 1));
+		nbBombe.setBounds(166, 176, 66, 20);
+		this.getContentPane().add(nbBombe);
+		
 		JLabel lblColonne = new JLabel("Colonne");
-		lblColonne.setBounds(221, 52, 46, 14);
-		contentPane.add(lblColonne);
-
+		lblColonne.setBounds(96, 161, 46, 14);
+		this.getContentPane().add(lblColonne);
+		
+		JLabel lblLigne = new JLabel("Ligne");
+		lblLigne.setBounds(20, 161, 41, 14);
+		this.getContentPane().add(lblLigne);
+		
 		JLabel lblBombe = new JLabel("Bombe");
-		lblBombe.setBounds(281, 52, 46, 14);
-		contentPane.add(lblBombe);
-
-		ButtonGroup formGrille = new ButtonGroup();
-		JRadioButton formRectangle = new JRadioButton("Rectangulaire");
-		formRectangle.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				changeForm(true);
-			}
-		});
-		JRadioButton formTriangle = new JRadioButton("Triangulaire");
-		formTriangle.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				changeForm(false);
-			}
-		});
-
-		formGrille.add(formRectangle);
-		formGrille.add(formTriangle);
-		formRectangle.setSelected(true);
-
-		formRectangle.setBounds(15, 31, 120, 14);
-		formTriangle.setBounds(138, 31, 120, 14);
-
-		contentPane.add(formTriangle);
-		contentPane.add(formRectangle);
-
-		JButton btnNewButton = new JButton("Start");
-		btnNewButton.addActionListener(new ActionListener() {
+		lblBombe.setBounds(166, 161, 46, 14);
+		this.getContentPane().add(lblBombe);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				start();
 			}
 		});
-		btnNewButton.setBounds(5, 98, 328, 31);
-		contentPane.add(btnNewButton);
-
-		nbJoueur = new JSpinner();
-		nbJoueur.setModel(new SpinnerNumberModel(new Integer(1),
-				new Integer(1), null, new Integer(1)));
-		nbJoueur.setBounds(277, 28, 50, 20);
-		contentPane.add(nbJoueur);
-
-		JLabel lblNbJoueur = new JLabel("Nb Joueur");
-		lblNbJoueur.setBounds(277, 8, 58, 14);
-		contentPane.add(lblNbJoueur);
-
+		btnStart.setBounds(0, 207, 255, 27);
+		this.getContentPane().add(btnStart);
+		
 		changeDifficulty();
 	}
 
-	protected void changeForm(boolean rectangle) {
-		this.formRectangle = rectangle;
-	}
-
-	protected void changeDifficulty() {
-		if (difficulty.getSelectedItem() == "Facile") {
-			nbBomb.setEnabled(false);
-			nbLine.setEnabled(false);
-			nbColumn.setEnabled(false);
-
-			nbLine.setValue(9);
-			nbColumn.setValue(9);
-			nbBomb.setValue(10);
-
-		} else if (difficulty.getSelectedItem() == "Moyen") {
-			nbBomb.setEnabled(false);
-			nbLine.setEnabled(false);
-			nbColumn.setEnabled(false);
-
-			nbLine.setValue(16);
-			nbColumn.setValue(16);
-			nbBomb.setValue(40);
-
-		} else if (difficulty.getSelectedItem() == "Difficile") {
-			nbBomb.setEnabled(false);
-			nbLine.setEnabled(false);
-			nbColumn.setEnabled(false);
-
-			nbLine.setValue(16);
-			nbColumn.setValue(30);
-			nbBomb.setValue(99);
-
-		} else if (difficulty.getSelectedItem() == "Personnalis\u00E9") {
-			nbBomb.setEnabled(true);
-			nbLine.setEnabled(true);
-			nbColumn.setEnabled(true);
+	protected void changeMode() {
+		if(rdbtnSolo.isSelected()){
+			nbJoueur.setValue(1);
+			nbJoueur.setEnabled(false);
+		} else if (rdbtnMulti.isSelected()){
+			nbJoueur.setEnabled(true);
 		}
 	}
+	
+	protected void changeDifficulty() {
+		if (difficulty.getSelectedItem() == "Facile") {
+			nbBombe.setEnabled(false);
+			nbLigne.setEnabled(false);
+			nbColonne.setEnabled(false);
 
+			nbLigne.setValue(9);
+			nbColonne.setValue(9);
+			nbBombe.setValue(10);
+
+		} else if (difficulty.getSelectedItem() == "Moyen") {
+			nbBombe.setEnabled(false);
+			nbLigne.setEnabled(false);
+			nbColonne.setEnabled(false);
+
+			nbLigne.setValue(16);
+			nbColonne.setValue(16);
+			nbBombe.setValue(40);
+
+		} else if (difficulty.getSelectedItem() == "Difficile") {
+			nbBombe.setEnabled(false);
+			nbLigne.setEnabled(false);
+			nbColonne.setEnabled(false);
+
+			nbLigne.setValue(16);
+			nbColonne.setValue(30);
+			nbBombe.setValue(99);
+
+		} else if (difficulty.getSelectedItem() == "Personnalis\u00E9") {
+			nbBombe.setEnabled(true);
+			nbLigne.setEnabled(true);
+			nbColonne.setEnabled(true);
+		}
+	}
+	
 	protected void start() {
 		if ((Integer) this.nbJoueur.getValue() == 1) {
-			if (this.formRectangle) {
-				Game game = new Game((Integer) nbLine.getValue(),
-						(Integer) nbColumn.getValue(),
-						(Integer) nbBomb.getValue());
+			if (this.rdbtnRectangle.isSelected()) {
+				Game game = new Game((Integer) nbLigne.getValue(),
+						(Integer) nbColonne.getValue(),
+						(Integer) nbBombe.getValue());
 				ViewRectangle vue = new ViewRectangle(game);
 				vue.setVisible(true);
-			} else {
-				Game game = new Game((Integer) nbLine.getValue(),
-						(Integer) nbBomb.getValue());
+				
+			} else if (this.rdbtnTriangle.isSelected()) {
+				Game game = new Game((Integer) nbLigne.getValue(),
+						(Integer) nbBombe.getValue());
 				ViewTriangle vue = new ViewTriangle(game);
 				vue.setVisible(true);
-
+				
 			}
 		} else {
-			if (this.formRectangle) {
-				GameMulti game = new GameMulti((Integer) nbLine.getValue(),
-						(Integer) nbColumn.getValue(),
-						(Integer) nbBomb.getValue(),
+			if (this.rdbtnRectangle.isSelected()) {
+				GameMulti game = new GameMulti((Integer) nbLigne.getValue(),
+						(Integer) nbColonne.getValue(),
+						(Integer) nbBombe.getValue(),
 						(Integer) nbJoueur.getValue());
 				ViewRectangle vue = new ViewRectangle(game);
 				vue.setVisible(true);
 				;
 			} else {
-				GameMulti game = new GameMulti((Integer) nbLine.getValue(),
-						(Integer) nbBomb.getValue(),
+				GameMulti game = new GameMulti((Integer) nbLigne.getValue(),
+						(Integer) nbBombe.getValue(),
 						(Integer) nbJoueur.getValue());
 				ViewTriangle vue = new ViewTriangle(game);
 				vue.setVisible(true);
-
 			}
 		}
 		this.dispose();

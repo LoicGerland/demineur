@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.ColorUIResource;
 
 import modele.CaseModele;
 import modele.Type;
@@ -24,9 +25,9 @@ public class CaseVue extends JButton {
 
 	private CaseModele caseMod;
 
-	public static Color CasePlay = Color.WHITE;
-	public static Color CaseUnplay = Color.GRAY;
-	public static Color colorFont = Color.DARK_GRAY;
+	public static Color CasePlay = Color.BLUE;
+	public static Color CaseUnplay = Color.YELLOW;
+	public static Color colorFont = Color.GREEN;
 
 	public CaseModele getCaseMod() {
 		return caseMod;
@@ -99,5 +100,6 @@ public class CaseVue extends JButton {
 			this.setBackground(CaseUnplay);
 		}
 
+		this.repaint();
 	}
 }

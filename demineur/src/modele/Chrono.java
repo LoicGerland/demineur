@@ -11,6 +11,7 @@ public class Chrono extends Observable implements Runnable {
 	private boolean finir;
 
 	public Chrono() {
+		this.tempsEcoule = 0;
 	}
 
 	/* Demarre le chronometre */

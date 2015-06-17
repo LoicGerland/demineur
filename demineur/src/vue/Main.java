@@ -16,8 +16,8 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 
-				Menu menu = new Menu();
-				menu.setVisible(true);
+				Menu window = new Menu();
+				window.setVisible(true);
 
 			}
 		});

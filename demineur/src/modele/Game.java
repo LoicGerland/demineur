@@ -3,7 +3,6 @@ package modele;
 import java.util.Observable;
 import java.util.Observer;
 
-
 public class Game extends Observable {
 
 	private Grid2D grid;
@@ -24,6 +23,7 @@ public class Game extends Observable {
 
 	// Creer une partie avec une grille rectangulaire
 	public Game(int x, int y, int nb) {
+		setChrono();
 		this.grid = new Grid2DRectangle(x, y, this);
 		nbCase = x * y;
 		if (nbCase < nb) {
@@ -40,6 +40,7 @@ public class Game extends Observable {
 
 	// Creer une partie avec une grille triangulaire
 	public Game(int y, int nb) {
+		setChrono();
 		this.grid = new Grid2DTriangle(y, this);
 		nbCase = 1;
 		for (int i = 1; i < y; i++) {
@@ -63,20 +64,27 @@ public class Game extends Observable {
 		this.status = Status.Playing;
 		this.nbFlags = 0;
 		this.nbClicked = 0;
+	}
+
+	private void setChrono() {
 		chrono = new Chrono();
-		chrono.demarrer();
-		this.chrono.addObserver(new Observer() {
+		chrono.addObserver(new Observer() {
 
 			@Override
 			public void update(Observable arg0, Object arg1) {
-					majScore();
+				majDisplay();
 			}
 		});
+		chrono.demarrer();
 	}
 
-	protected void majScore() {
+	public Chrono getChrono() {
+		return this.chrono;
+	}
+
+	protected void majDisplay() {
 		if (this.status == Status.Playing)
-				this.notifyView();
+			this.notifyView();
 	}
 
 	public Grid2D getGrid() {
@@ -100,12 +108,14 @@ public class Game extends Observable {
 			this.status = Status.Loose;
 			this.getGrid().showBomb();
 			notifyView();
+			this.chrono.arreter();
 		}
 	}
 
 	public void winner() {
 		if (this.status == Status.Playing) {
 			this.status = Status.Win;
+			this.chrono.arreter();
 		}
 		notifyView();
 	}
@@ -139,6 +149,7 @@ public class Game extends Observable {
 	public void playAgain() {
 		getGrid().hideAll();
 		init();
+		this.chrono.demarrer();
 	}
 
 	// Méthode déclenché lorsqu'une mine est découverte

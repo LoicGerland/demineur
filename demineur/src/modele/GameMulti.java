@@ -63,6 +63,7 @@ public class GameMulti extends Game {
 		getGrid().hideAll();
 		nbClicked = 0;
 		nbFlags = 0;
+		this.chrono.demarrer();
 		setStatus(Status.Playing);
 		for (Player player : players) {
 			player.setScore(0);
@@ -84,7 +85,7 @@ public class GameMulti extends Game {
 				+this.getCurrentPlayer().getName()+" : " +((Integer) this.getCurrentPlayer().getScore()).toString();
 	}
 
-	// Méthode déclaenché lorsqu'une case vide est découverte
+	// Méthode déclenché lorsqu'une case vide est découverte
 	public void gotEmpty() {
 		swapPlayer();
 		notifyView();
