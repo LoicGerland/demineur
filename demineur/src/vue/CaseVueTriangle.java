@@ -7,24 +7,30 @@ import java.awt.Polygon;
 
 import modele.CaseModele;
 
-public class CaseVueTriangleUp extends CaseVue {
+public class CaseVueTriangle extends CaseVue {
 
-	private static final long serialVersionUID = 7417758830643828885L;
+	private static final long serialVersionUID = -5293370268452789379L;
 
 	private Polygon shape;
 
-	public CaseVueTriangleUp(CaseModele caseMod) {
+	public CaseVueTriangle(CaseModele caseMod, boolean up) {
 		super(caseMod);
 		setContentAreaFilled(false);
-		initialize();
+		initialize(up);
 	}
 
-	protected void initialize() {
+	protected void initialize(boolean up) {
 		shape = new Polygon();
 		setSize(30, 30);
-		shape.addPoint(15, 0);
-		shape.addPoint(0, 26);
-		shape.addPoint(30, 26);
+		if (up) {
+			shape.addPoint(15, 0);
+			shape.addPoint(0, 26);
+			shape.addPoint(30, 26);
+		} else {
+			shape.addPoint(15, 26);
+			shape.addPoint(0, 0);
+			shape.addPoint(30, 0);
+		}
 	}
 
 	@Override

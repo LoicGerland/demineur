@@ -133,13 +133,13 @@ public class ViewTriangle extends JFrame {
 						&& x < this.game.getGrid().getWidth()
 								- (this.game.getGrid().getHeight() - (y + 1))) {
 					if (rang % 2 == 1) {
-						JComponent ptest = new CaseVueTriangleUp(this.game
-								.getGrid().getGrid()[x][y]);
+						JComponent ptest = new CaseVueTriangle(this.game
+								.getGrid().getGrid()[x][y], true);
 						ptest.setBorder(blackline);
 						pan.add(ptest);
 					} else {
-						JComponent ptest = new CaseVueTriangleDown(this.game
-								.getGrid().getGrid()[x][y]);
+						JComponent ptest = new CaseVueTriangle(this.game
+								.getGrid().getGrid()[x][y], false);
 						ptest.setBorder(blackline);
 						pan.add(ptest);
 					}
