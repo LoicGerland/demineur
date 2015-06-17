@@ -49,7 +49,6 @@ public class Game extends Observable {
 		if (nbCase < nb) {
 			nb = nbCase;
 		}
-		System.out.println(nbClicked + " " + nbCase);
 		this.nbBombs = nb;
 		nbCase -= nbBombs;
 
@@ -166,7 +165,6 @@ public class Game extends Observable {
 		if (nbClicked >= nbCase) {
 			winner();
 		}
-		System.out.println(nbClicked + " " + nbCase);
 	}
 
 	public String getText() {
