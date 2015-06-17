@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.ColorUIResource;
 
 import modele.CaseModele;
 import modele.Type;

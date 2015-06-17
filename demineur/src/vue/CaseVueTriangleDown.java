@@ -39,7 +39,7 @@ public class CaseVueTriangleDown extends CaseVue {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
     	if(this.getCaseMod().isClicked()){
     		g.setColor(Color.BLUE);
     	} else g.setColor(Color.black);

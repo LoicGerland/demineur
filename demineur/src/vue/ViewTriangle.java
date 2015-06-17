@@ -83,7 +83,7 @@ public class ViewTriangle extends JFrame {
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-						lblAffichage.setText(game.getText());
+					lblAffichage.setText(game.getText());
 				}
 			}
 		});
@@ -159,11 +159,6 @@ public class ViewTriangle extends JFrame {
 				.getHeight());
 	}
 
-	private void majCase() {
-		for (int i = 0; i < this.pan.getComponentCount(); i++) {
-			((CaseVue) this.pan.getComponent(i)).setCouleur();
-		}
-	}
 
 	protected void continuer() {
 		int option = JOptionPane.showConfirmDialog(null,

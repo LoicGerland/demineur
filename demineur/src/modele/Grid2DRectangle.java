@@ -69,5 +69,4 @@ public class Grid2DRectangle extends Grid2D {
 		}
 	}
 
-
 }

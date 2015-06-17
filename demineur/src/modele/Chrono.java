@@ -107,27 +107,27 @@ public class Chrono extends Observable implements Runnable {
 		this.tempsEcoule = tempsEcoule;
 	}
 
-	public String toString(){
-		int seconde = (int) (tempsEcoule/1000);
-		int minute = seconde/60;
+	public String toString() {
+		int seconde = (int) (tempsEcoule / 1000);
+		int minute = seconde / 60;
 		seconde = seconde % 60;
-		
+
 		String min;
 		String sec;
-		
-		if (minute < 10){
-			min = "0"+((Integer)minute).toString();
+
+		if (minute < 10) {
+			min = "0" + ((Integer) minute).toString();
 		} else {
-			min = ((Integer)minute).toString();
-			
+			min = ((Integer) minute).toString();
+
 		}
-		
-		if (seconde < 10){
-			sec = "0"+((Integer)seconde).toString();
+
+		if (seconde < 10) {
+			sec = "0" + ((Integer) seconde).toString();
 		} else {
-			sec = ((Integer)seconde).toString();
-			
+			sec = ((Integer) seconde).toString();
+
 		}
-		return min+":"+sec;
+		return min + ":" + sec;
 	}
 }

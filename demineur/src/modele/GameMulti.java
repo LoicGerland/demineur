@@ -31,18 +31,18 @@ public class GameMulti extends Game {
 
 	// Retourne le joueur avec le plus haut score, null si égalité
 	public Player getWinner() {
-		boolean egalite=false;
+		boolean egalite = false;
 		Player winner = new Player("");
 		for (Player player : players) {
 			if (player.getScore() > winner.getScore()) {
 				winner = player;
-				egalite=false;
+				egalite = false;
 			} else if (player.getScore() == winner.getScore()
 					&& player != winner) {
 				egalite = true;
 			}
 		}
-		if(egalite)
+		if (egalite)
 			winner = null;
 		return winner;
 	}
@@ -81,8 +81,11 @@ public class GameMulti extends Game {
 
 	public String getText() {
 		return (((Integer) (this.getNbBombs() - this.getNbFlags())).toString()
-				+ " - " + chrono.toString())+ " - "
-				+this.getCurrentPlayer().getName()+" : " +((Integer) this.getCurrentPlayer().getScore()).toString();
+				+ " - " + chrono.toString())
+				+ " - "
+				+ this.getCurrentPlayer().getName()
+				+ " : "
+				+ ((Integer) this.getCurrentPlayer().getScore()).toString();
 	}
 
 	// Méthode déclenché lorsqu'une case vide est découverte

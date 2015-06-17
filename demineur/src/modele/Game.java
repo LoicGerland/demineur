@@ -44,12 +44,12 @@ public class Game extends Observable {
 		this.grid = new Grid2DTriangle(y, this);
 		nbCase = 0;
 		for (int i = 1; i <= y; i++) {
-			nbCase += (2*i) - 1;
+			nbCase += (2 * i) - 1;
 		}
 		if (nbCase < nb) {
 			nb = nbCase;
 		}
-		System.out.println(nbClicked +" "+nbCase);
+		System.out.println(nbClicked + " " + nbCase);
 		this.nbBombs = nb;
 		nbCase -= nbBombs;
 
@@ -166,7 +166,7 @@ public class Game extends Observable {
 		if (nbClicked >= nbCase) {
 			winner();
 		}
-		System.out.println(nbClicked +" "+nbCase);
+		System.out.println(nbClicked + " " + nbCase);
 	}
 
 	public String getText() {

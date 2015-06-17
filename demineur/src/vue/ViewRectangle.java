@@ -43,7 +43,7 @@ public class ViewRectangle extends JFrame {
 
 	public ViewRectangle(Game g) {
 		super();
-		
+
 		this.game = g;
 		color = Couleur.Violet;
 		build();
@@ -86,14 +86,13 @@ public class ViewRectangle extends JFrame {
 					}
 				}
 				if (game.getStatus() == Status.Playing) {
-						lblAffichage.setText(game.getText());
+					lblAffichage.setText(game.getText());
 				}
 			}
 		});
-		
 
 		setColor(color);
-		
+
 	}
 
 	public void build() {
@@ -175,13 +174,10 @@ public class ViewRectangle extends JFrame {
 
 		setJMenuBar(menuBar);
 
-
-		
 		JComponent window = new JPanel(new BorderLayout());
 
-		
 		JPanel status = new JPanel(new FlowLayout());
-		
+
 		lblAffichage = new JLabel(game.getText());
 		status.add(lblAffichage);
 

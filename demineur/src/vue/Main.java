@@ -1,7 +1,5 @@
 package vue;
 
-import javax.swing.SwingUtilities;
-
 /**
  *
  * @author Loic
@@ -13,8 +11,8 @@ public class Main {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-				Menu window = new Menu();
-				window.setVisible(true);
+		Menu window = new Menu();
+		window.setVisible(true);
 	}
 
 }
