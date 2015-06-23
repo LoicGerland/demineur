@@ -75,9 +75,9 @@ public class CaseVue extends JButton {
 
 	protected void setImage() {
 		if (caseMod.isFlag()) {
-			this.setIcon(new ImageIcon("sprite/flag.png"));
+			this.setIcon(new ImageIcon(this.getClass().getResource("flag.png")));
 		} else if (caseMod.isClicked() && caseMod.getType() == Type.Mine) {
-			this.setIcon(new ImageIcon("sprite/bomb.png"));
+			this.setIcon(new ImageIcon(this.getClass().getResource("bomb.png")));
 		} else if (caseMod.isClicked() && caseMod.getType() == Type.Empty
 				&& caseMod.getValue() > 0) {
 			Font font = new Font("Stencil", Font.BOLD, 18);
