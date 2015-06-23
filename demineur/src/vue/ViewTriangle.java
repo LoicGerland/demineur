@@ -110,7 +110,8 @@ public class ViewTriangle extends JFrame {
 			}
 		});
 		again.add(againNew);
-
+		
+		menuBar.add(menu);
 		menu.add(again);
 
 		setJMenuBar(menuBar);
